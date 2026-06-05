@@ -194,7 +194,7 @@ export default function App() {
       {/* Humble Footer containing copy note */}
       <footer className="py-6 border-t border-[#eae8e4] bg-white text-center text-xs text-[#8a7a6b] select-none">
         <div className="max-w-7xl mx-auto px-4">
-          <p>© 2026 AhorroSurtido • Compras Mayoristas en Comunidad • Desarrollado para 'EcoSurtido' MVP.</p>
+          <p>© 2026 AhorroSurtido • Compras Mayoristas en Comunidad • Desarrollado por Alumnos de Fundación Pescar</p>
         </div>
       </footer>
     </div>
