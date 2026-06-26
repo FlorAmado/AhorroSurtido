@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Header from './components/Header.jsx';
-import NodosTab from './components/NodosTab.jsx';
-import MayoristasTab from './components/MayoristasTab.jsx';
-import CartTab from './components/CartTab.jsx';
-import ImpactTab from './components/ImpactTab.jsx';
-import { INITIAL_PRODUCTS, INITIAL_NODES } from './data.js';
+import NodosTab from './pages/NodosTab.jsx';
+import MayoristasTab from './pages/MayoristasTab.jsx';
+import CartTab from './pages/CartTab.jsx';
+import ImpactTab from './pages/ImpactTab.jsx';
+import { INITIAL_PRODUCTS, INITIAL_NODES } from './utils/data.js';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('nodos');
