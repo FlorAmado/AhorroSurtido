@@ -58,6 +58,9 @@ export default function App() {
   // Add a product units to cooperative cart and increment the progress bar!
   const handleAddProductToCart = (product) => {
     // 1. Update the product's progress bar in our state
+    // ← AGREGÁS ESTO: si ya llegó al límite, no hace nada
+    if (product.progressCurrent >= product.progressTarget) return;
+
     setProducts(prevProducts => 
       prevProducts.map(p => {
         if (p.id === product.id) {
@@ -78,10 +81,14 @@ export default function App() {
       const existingIdx = prevAdded.findIndex(item => item.product.id === product.id);
       if (existingIdx > -1) {
         const copy = [...prevAdded];
-        copy[existingIdx].qty += 1;
+        copy[existingIdx] = {
+          ...copy[existingIdx],
+          qty: copy[existingIdx].qty + 1,
+          product: { ...copy[existingIdx].product } // no muta el original
+        };
         return copy;
       } else {
-        return [...prevAdded, { product, qty: 1 }];
+        return [...prevAdded, { product: { ...product }, qty: 1 }];
       }
     });
   };
