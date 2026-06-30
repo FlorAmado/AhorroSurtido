@@ -1,8 +1,32 @@
+# Dependencias de Node
+# (Contiene todos los paquetes instalados con npm/yarn, no se suben porque se regeneran con 'npm install')
 node_modules/
+
+# Compilación y Producción
+# (Carpetas que se generan al compilar el proyecto para producción mediante 'npm run build')
 build/
 dist/
+
+# Cobertura de Pruebas
+# (Reportes generados automáticamente al ejecutar pruebas unitarias o de integración)
 coverage/
+
+# Archivos del Sistema Operativo
+# (Archivos temporales o de configuración interna de macOS y Windows)
 .DS_Store
+Thumbs.db
+
+# Archivos de Registro (Logs)
+# (Registros de errores o actividad generados por npm, yarn o el framework)
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de Entorno y Configuración Local
+# (Se ignoran todas las credenciales y configuraciones locales por seguridad)
 .env*
+
+# Exceptuar el archivo de ejemplo de variables de entorno
+# (Es una guía sobre qué variables se deben configurar)
 !.env.example
