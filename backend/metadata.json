@@ -1,0 +1,8 @@
+{
+  "name": "AhorroSurtido",
+  "description": "Plataforma web para compras mayoristas colaborativas con división de costos proporcional y dashboard de impacto.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
