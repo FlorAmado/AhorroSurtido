@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependencias de Node
 node_modules/
 
@@ -12,3 +13,13 @@ yarn-error.log*
 # Archivos del sistema operativo
 .DS_Store
 Thumbs.db
+=======
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+>>>>>>> main
