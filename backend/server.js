@@ -2,11 +2,12 @@ import 'dotenv/config'
 import express from 'express';
 import routesProductos from './src/routes/productos.js';
 import bodyParser from 'body-parser';
+import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la base de datos
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extend:true}));
+app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/productos', routesProductos)
 
@@ -17,4 +18,3 @@ try {
 } catch(e){
     console.log(e);
 }
-

@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/utils/mongodb.js",
-    "build": "vite build",
-    "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
-    "lint": "echo 'No TS linting needed'"
-  },
+  "dev": "nodemon server.js",
+  "build": "vite build",
+  "preview": "vite preview",
+  "clean": "rm -rf dist server.js",
+  "lint": "echo 'No TS linting needed'"
+},
   "dependencies": {
     "@google/genai": "^1.29.0",
     "@tailwindcss/vite": "^4.1.14",
