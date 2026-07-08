@@ -1,0 +1,83 @@
+### ==========================================
+### TEST SUITE: AUTH (USUARIOS)
+### ==========================================
+
+### 1. Registrar un usuario nuevo
+POST http://localhost:5100/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Flor",
+  "email": "flor@ahorrosurtido.com",
+  "password": "password123"
+}
+
+### 2. Iniciar sesión (Login)
+POST http://localhost:5100/auth/login
+Content-Type: application/json
+
+{
+  "email": "flor@ahorrosurtido.com",
+  "password": "password123"
+}
+
+
+### ==========================================
+### TEST SUITE: PRODUCTOS
+### ==========================================
+
+### 3. Crear un producto individual
+POST http://localhost:5100/productos
+Content-Type: application/json
+
+{
+  "nombre": "Aceite de Girasol 1.5L",
+  "categoria": "Almacén",
+  "precioMinorista": 1500,
+  "precioMayorista": 1200,
+  "umbralMayorista": 6
+}
+
+### 4. Carga Masiva (Bulk) - Ideal para poblar la base rápido
+POST http://localhost:5100/productos/bulk
+Content-Type: application/json
+
+[
+  {
+    "nombre": "Harina 000 1kg",
+    "categoria": "Almacén",
+    "precioMinorista": 800,
+    "precioMayorista": 650,
+    "umbralMayorista": 10
+  },
+  {
+    "nombre": "Leche Larga Vida 1L",
+    "categoria": "Lácteos",
+    "precioMinorista": 1200,
+    "precioMayorista": 950,
+    "umbralMayorista": 12
+  }
+]
+
+### 5. Obtener TODOS los productos (GET)
+GET http://localhost:5100/productos
+
+### ==========================================
+### PRUEBAS CON ID ESPECÍFICO
+### (Ejecutá el test 5, copiá un _id de la respuesta y reemplazalo abajo)
+### ==========================================
+
+### 6. Obtener UN producto por ID
+GET http://localhost:5100/productos/6a4daeb34068a67c8d6e57a1
+
+### 7. Actualizar el precio de un producto (PUT)
+PUT http://localhost:5100/productos/6a4daeb34068a67c8d6e57a1
+Content-Type: application/json
+
+{
+  "precioMinorista": 2000,
+  "precioMayorista": 1250
+}
+
+### 8. Eliminar un producto (DELETE)
+DELETE http://localhost:5100/productos/6a4daeb34068a67c8d6e57a1
