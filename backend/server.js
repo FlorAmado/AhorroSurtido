@@ -5,13 +5,17 @@ import bodyParser from 'body-parser';
 import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la base de datos
 import authRoutes from './src/routes/authRoutes.js';
 
-const app = express();
+//RUTA DE NODOS
+import nodoRoutes from './src/routes/nodoRoutes.js';
 
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/productos', routesProductos)
 app.use('/auth', authRoutes);
+
+app.use('/nodos', nodoRoutes); // ruta nodos
 
 try {
     const PORT = process.env.PORT || 3000;

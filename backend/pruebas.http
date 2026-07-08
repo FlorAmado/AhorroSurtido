@@ -81,3 +81,18 @@ Content-Type: application/json
 
 ### 8. Eliminar un producto (DELETE)
 DELETE http://localhost:5100/productos/6a4daeb34068a67c8d6e57a1
+
+
+### ==========================================
+### TEST SUITE: NODOS
+### ==========================================
+
+### 9. Cre### 9. Crear un nodo vecinal nuevo
+POST http://localhost:5100/nodos
+Content-Type: application/json
+
+{
+  "nombre": "Nodo Barrio Sur",
+  "location": "Tucuman",
+  "adminId": "6a4da160da72c3c0bd962e95"
+}
