@@ -87,7 +87,7 @@ DELETE http://localhost:5100/productos/6a4daeb34068a67c8d6e57a1
 ### TEST SUITE: NODOS
 ### ==========================================
 
-### 9. Cre### 9. Crear un nodo vecinal nuevo
+### 9. Crear un nodo vecinal nuevo
 POST http://localhost:5100/nodos
 Content-Type: application/json
 
@@ -96,3 +96,22 @@ Content-Type: application/json
   "location": "Tucuman",
   "adminId": "6a4da160da72c3c0bd962e95"
 }
+
+### 10. Enviar codigo de nodo para unirse
+POST http://localhost:5100/nodos/join
+Content-Type: application/json
+
+{
+  "invitation_code": "KW-AZCZ",
+  "userId": "6a4da160da72c3c0bd962e95"
+}
+
+###
+POST http://localhost:5100/nodos/join
+Content-Type: application/json
+
+{
+  "invitation_code": "KC-AZCZ",
+  "userId": "6a4da160da72c3c0bd962e95"
+}
+

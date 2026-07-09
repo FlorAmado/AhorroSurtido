@@ -70,4 +70,69 @@ router.post('/', async (req, res) => {
     }
 });
 
+/**
+ * RUTA: POST /nodos/join
+ * DESCRIPCIÓN: Permite a un usuario unirse a un nodo existente mediante un código de invitación.
+ */
+router.post('/join', async (req, res) => {
+    try {
+        const { invitation_code, userId } = req.body;
+
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Debe registrarse para unirse al nodo.'
+            });
+        }
+
+        if (!invitation_code) {
+            return res.status(400).json({
+                success: false,
+                message: 'El código es incorrecto o no fue proporcionado. Intente nuevamente.'
+            });
+        }
+
+        // Buscar el nodo por el código de invitación
+        const nodo = await Nodo.findOne({ invitation_code: invitation_code.toUpperCase() });
+
+            if (!nodo) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Código de invitación inválido o nodo no encontrado.'
+                });
+            }
+
+            // Verificar si el usuario ya es miembro del nodo
+            if (nodo.members.includes(userId)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Ya eres miembro de este nodo.'
+                });
+            }
+
+        // Agregar al usuario a la lista de miembros del nodo
+        nodo.members.push(userId);
+        await nodo.save();
+
+        // Actualizar el nodoId en el perfil del usuario
+        await Usuario.findByIdAndUpdate(userId, {
+            nodoId: nodo._id,
+            rol: 'miembro'
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Te has unido al nodo exitosamente.',
+            nodo
+        });
+
+    } catch (error) {
+        console.error('Error al unirse al nodo:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error interno del servidor al intentar unirse al nodo.'
+        });
+    }
+});
+
 export default router;
