@@ -1,22 +1,99 @@
-/* Para Agus: Desarrollo de UI Login/Registro (frontend)
-Estructura de Componentes: En frontend/src/pages/Auth/, crea dos componentes: Login.jsx y Register.jsx.
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Mail, Lock } from 'lucide-react';
+import { AuthContext } from '../../store/AuthContext';
 
-Diseño: Usa la paleta del proyecto (Color principal: #EC721A). Mantén los formularios minimalistas: inputs limpios, bordes redondeados suaves y un botón de "call to action" claro.
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [cargando, setCargando] = useState(false);
 
-Manejo de Estado Local: Usa useState para capturar el valor de los inputs (email, password, nombre).
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-Consumo del Contexto:
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setCargando(true);
 
-Importa useContext y AuthContext.
+    try {
+      await login(email, password);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message || 'No se pudo iniciar sesión. Intentá nuevamente.');
+    } finally {
+      setCargando(false);
+    }
+  };
 
-Extrae las funciones login y register del contexto.
+  return (
+    <div className="min-h-screen bg-brand-bg flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl border border-[#eae8e4] shadow-sm p-8">
+        <div className="text-center mb-8">
+          <span className="font-display text-2xl font-black tracking-tight text-[#2c2520]">
+            Ahorro<span className="text-brand-orange">Surtido</span>
+          </span>
+          <p className="mt-2 text-sm text-[#6b5e52]">Ingresá a tu cuenta para seguir ahorrando</p>
+        </div>
 
-Envío del Formulario (onSubmit):
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="login-email" className="block text-sm font-medium text-[#2c2520] mb-1.5">
+              Email
+            </label>
+            <div className="relative">
+              <Mail className="w-4 h-4 text-[#a89a8c] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                id="login-email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@email.com"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#eae8e4] bg-white text-[#2c2520] placeholder-[#a89a8c] focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange transition-all"
+              />
+            </div>
+          </div>
 
-Usa e.preventDefault().
+          <div>
+            <label htmlFor="login-password" className="block text-sm font-medium text-[#2c2520] mb-1.5">
+              Contraseña
+            </label>
+            <div className="relative">
+              <Lock className="w-4 h-4 text-[#a89a8c] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                id="login-password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#eae8e4] bg-white text-[#2c2520] placeholder-[#a89a8c] focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange transition-all"
+              />
+            </div>
+          </div>
 
-Dentro de un bloque try/catch, llama a la función del contexto (ej: await login(email, password)).
+          <button
+            type="submit"
+            disabled={cargando}
+            className="w-full py-2.5 rounded-xl bg-brand-orange text-white font-semibold hover:bg-brand-orange-hover transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+          >
+            {cargando ? 'Ingresando...' : 'Iniciar sesión'}
+          </button>
 
-Si es exitoso, redirige al usuario al Dashboard (puedes usar useNavigate de react-router-dom).
+          {error && (
+            <p className="text-sm text-red-600 text-center">{error}</p>
+          )}
+        </form>
 
-Si cae en el catch, muestra el mensaje de error en un párrafo rojo de alerta debajo del formulario. */
+        <p className="mt-6 text-center text-sm text-[#6b5e52]">
+          ¿No tenés cuenta?{' '}
+          <a href="/register" className="text-brand-orange font-semibold hover:underline">
+            Registrate
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
