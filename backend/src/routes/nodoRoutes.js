@@ -41,12 +41,17 @@ router.post('/', async (req, res) => {
         } while (codigoExiste);
 
         // 3. Crear el nodo
+        //Crea una fecha de expiración 
+        const fechaExpiracion = new Date();
+        fechaExpiracion.setDate(fechaExpiracion.getDate() + 7);
+        
         const nuevoNodo = new Nodo({
-            name: nombre,
-            location: location,
-            invitation_code: codigoUnico,
-            admin: adminId,
-            members: [adminId]
+        name: nombre,
+        location: location,
+        invitation_code: codigoUnico,
+        invitation_expires_at: fechaExpiracion,
+        admin: adminId,
+        members: [adminId]
         });
 
         await nuevoNodo.save();
@@ -121,6 +126,14 @@ router.post('/join', async (req, res) => {
                 success: false,
                 message: 'Código de invitación inválido o nodo no encontrado.'
             });
+        }
+        // Verificar si el código expiró
+
+        if (new Date() > nodo.invitation_expires_at) {
+         return res.status(410).json({
+        success: false,
+        message: 'El código de invitación ha expirado.'
+        });
         }
 
         // Si el usuario ya pertenece a otro nodo, quitarlo del nodo anterior

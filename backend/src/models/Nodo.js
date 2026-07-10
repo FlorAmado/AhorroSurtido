@@ -19,6 +19,10 @@ const NodoSchema = new mongoose.Schema({
     uppercase: true, // Siempre en mayúsculas
     trim: true
   },
+  invitation_expires_at: {
+    type: Date,
+    required: true
+  },
   admin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario', // Coincide con tu modelo de usuarios
