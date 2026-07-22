@@ -115,3 +115,55 @@ Content-Type: application/json
   "userId": "6a4da160da72c3c0bd962e95"
 }
 
+### ----------------- pruebas keyla
+### 1. Crear nuevo usuario
+POST http://localhost:5100/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "usuario",
+  "email": "test@usuario.com",
+  "password": "password123"
+}
+
+
+### 2. Crear un nuevo Nodo (Épica 1.5)
+# Reemplaza TU_TOKEN_AQUÍ con el JWT que te dio el login
+POST http://localhost:5100/nodos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWU0NjJmZTdmOGZiNWU3MTNkZjQ0NCIsInJvbCI6Im1pZW1icm8iLCJub2RvSWQiOm51bGwsImlhdCI6MTc4NDU2MzI0NywiZXhwIjoxNzg1MTY4MDQ3fQ.u71Mct9JwxKPgigqeoWdhQfWKXxMLBJy_3P9aQpoork
+Content-Type: application/json
+
+{
+  "nombre": "Nodo Tucumán Centro",
+  "location": "Plaza Independencia",
+  "limiteMiembros": 15
+}
+
+### 3. Solicitar unirse a un Nodo (POST /join)
+POST http://localhost:5100/nodos/join
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWU0OGEyZTdmOGZiNWU3MTNkZjQ0NyIsInJvbCI6Im1pZW1icm8iLCJub2RvSWQiOm51bGwsImlhdCI6MTc4NDU2Mzg3NSwiZXhwIjoxNzg1MTY4Njc1fQ.xkttEgH2CMoHK2yB43bBw_6h9_2N44-zoynJByRofxw
+Content-Type: application/json
+
+{
+  "invitation_code": "ST-U03M"
+}
+
+### 4. Aprobar un miembro pendiente (PUT /:id/approve)
+# Reemplaza :id por el _id del nodo creado
+PUT http://localhost:5100/nodos/6a5e478fe7f8fb5e713df446/approve
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWU0NjJmZTdmOGZiNWU3MTNkZjQ0NCIsInJvbCI6Im1pZW1icm8iLCJub2RvSWQiOm51bGwsImlhdCI6MTc4NDU2MzI0NywiZXhwIjoxNzg1MTY4MDQ3fQ.u71Mct9JwxKPgigqeoWdhQfWKXxMLBJy_3P9aQpoork
+Content-Type: application/json
+
+{
+  "candidatoId": "6a5e48a2e7f8fb5e713df447",
+  "action": "accept"
+}
+
+### 5. Modificar la capacidad del Nodo (PUT /:id/capacidad)
+PUT http://localhost:5100/nodos/6a5e478fe7f8fb5e713df446/capacidad
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNWU0NjJmZTdmOGZiNWU3MTNkZjQ0NCIsInJvbCI6Im1pZW1icm8iLCJub2RvSWQiOm51bGwsImlhdCI6MTc4NDU2MzI0NywiZXhwIjoxNzg1MTY4MDQ3fQ.u71Mct9JwxKPgigqeoWdhQfWKXxMLBJy_3P9aQpoork
+Content-Type: application/json
+
+{
+  "nuevoLimite": 25
+}
