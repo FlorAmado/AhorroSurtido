@@ -17,7 +17,7 @@ Vemos exactamente qué tipos de datos maneja cada clase (ej. `String`, `Number`,
 Aquí vemos la lógica de negocio real que el equipo tendrá que programar:
 
 - El **Usuario** sabe cómo `generarToken()` para la autenticación y `compararPassword()` por seguridad.
-- El **Nodo** es responsable de `generarCodigoUnico()` para invitar a nuevos vecinos, pero ahora también sabe cómo `editarCapacidad()` y `gestionarSolicitud()` (para que el dueño acepte o rechace a los miembros pendientes).
+- El **Nodo** es responsable de `generarCodigoUnico()` para invitar a nuevos miembros, pero ahora también sabe cómo `editarCapacidad()` y `gestionarSolicitud()` (para que el dueño acepte o rechace a los miembros pendientes).
 - El **Pedido** sabe cómo `calcularTotal()` sumando sus ítems, y adquiere el método crítico `confirmarListo()` para bloquear la edición del carrito cuando el usuario finaliza su selección.
 - La **CompraColectiva** alberga la lógica matemática más compleja: `calcularAhorro()` y la generación de reportes con `calcularAhorroMensualPorNodo()`.
 
