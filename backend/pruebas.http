@@ -167,3 +167,54 @@ Content-Type: application/json
 {
   "nuevoLimite": 25
 }
+
+### VARIABLES DE ENTORNO LOCAL
+# Reemplazá estos valores con los datos reales de tu MongoDB local
+@api = http://localhost:3000/api
+@token_miembro = Bearer eyJhbGci... (pegá el token del usuario común acá)
+@token_duenio = Bearer eyJhbGci... (pegá el token del administrador del nodo acá)
+@nodo_id = 64b8f... (ID del nodo de prueba)
+@pedido_id = 64c9a... (ID del pedido en estado "Abierto" del miembro)
+
+
+### ==========================================
+### ÉPICA 3: EL ALGORITMO (FLUJO DE PRUEBAS)
+### ==========================================
+
+### 1. Confirmar Pedido (Rol: miembro)
+# Simula al usuario presionando "Listo para cerrar" en su carrito.
+PUT {{api}}/pedidos/{{pedido_id}}/listo
+Authorization: {{token_miembro}}
+Content-Type: application/json
+
+### 
+
+### 2. Verificar que el pedido quedó bloqueado (Opcional - para comprobar el error)
+# Si volvés a ejecutar el PUT anterior, el backend debería devolver un Error 400.
+PUT {{api}}/pedidos/{{pedido_id}}/listo
+Authorization: {{token_miembro}}
+Content-Type: application/json
+
+###
+
+### 3. Forzar Cierre de Compra (Rol: Dueño)
+# Dispara el algoritmo de consolidación. Solo debe funcionar con el token del dueño.
+POST {{api}}/compras-colectivas/forzar-cierre
+Authorization: {{token_duenio}}
+Content-Type: application/json
+
+{
+  "nodoId": "{{nodo_id}}"
+}
+
+###
+
+### 4. Forzar Cierre de Compra (Prueba de Seguridad)
+# Si intentamos cerrar la compra con el token del miembro, el middleware authDuenio debería frenarlo (Error 401/403).
+POST {{api}}/compras-colectivas/forzar-cierre
+Authorization: {{token_miembro}}
+Content-Type: application/json
+
+{
+  "nodoId": "{{nodo_id}}"
+}

@@ -9,7 +9,7 @@ const compraColectivaSchema = new mongoose.Schema({
   },
   pedidosIds: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pedido' // Referencia a los pedidos individuales de los vecinos que integraron este ciclo
+    ref: 'Pedido' // Referencia a los pedidos individuales de los miembros que integraron este ciclo
   }],
   totalMinorista: { 
     type: Number, 
