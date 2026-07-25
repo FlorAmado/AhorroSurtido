@@ -6,14 +6,18 @@ import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la
 import authRoutes from './src/routes/authRoutes.js';
 import nodoRoutes from './src/routes/nodoRoutes.js';
 
-const app = express();
+//RUTA DE NODOS
+import nodoRoutes from './src/routes/nodoRoutes.js';
 
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/productos', routesProductos)
 app.use('/auth', authRoutes);
 app.use('/api/nodes', nodoRoutes);
+
+app.use('/nodos', nodoRoutes); // ruta nodos
 
 try {
     const PORT = process.env.PORT || 3000;
