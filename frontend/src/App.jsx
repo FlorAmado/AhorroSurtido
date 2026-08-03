@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from './components/Header.jsx';
 import NodosTab from './pages/NodosTab.jsx';
 import MayoristasTab from './pages/MayoristasTab.jsx';
 import CartTab from './pages/CartTab.jsx';
 import ImpactTab from './pages/ImpactTab.jsx';
 import { INITIAL_PRODUCTS, INITIAL_NODES } from './utils/data.js';
+import { getProducts } from "./services/productService";
+
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('nodos');
   const [nodes, setNodes] = useState(INITIAL_NODES);
   const [currentNode, setCurrentNode] = useState(INITIAL_NODES[0]); // default is Villa Crespo
   
-  // Clone products database to allow real-time progress bar changes!
-  const [products, setProducts] = useState(INITIAL_PRODUCTS);
+  // =========================
+  // Productos obtenidos desde la API
+  // =========================  
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   
   // Keep track of user's shopping basket of added wholesale products
   const [addedProducts, setAddedProducts] = useState([]);
   
   // User savings accumulated during this active session
   const [sessionSavings, setSessionSavings] = useState(0);
+
+  // =========================
+// Obtener catálogo desde el Backend
+// =========================
+
+useEffect(() => {
+
+    async function cargarProductos() {
+        try {
+            const data = await getProducts();
+            setProducts(data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoadingProducts(false);
+        }
+    }
+    cargarProductos();
+
+}, []);
 
   // Invitation code lookup router
   const handleJoinNodeByCode = (code) => {
@@ -118,7 +144,6 @@ export default function App() {
 
   const handleClearCart = () => {
     // Decrease progress bars back to initial parameters
-    setProducts(INITIAL_PRODUCTS);
     setAddedProducts([]);
   };
 
@@ -175,6 +200,7 @@ export default function App() {
           {activeTab === 'mayoristas' && (
             <MayoristasTab 
               products={products}
+              loading={loadingProducts}
               onAddProductToCart={handleAddProductToCart}
               currentNodeName={`Nodo ${currentNode.name}`}
             />
