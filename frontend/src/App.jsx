@@ -6,7 +6,7 @@ import MayoristasTab from './pages/MayoristasTab.jsx';
 import CartTab from './pages/CartTab.jsx';
 import ImpactTab from './pages/ImpactTab.jsx';
 import { INITIAL_PRODUCTS, INITIAL_NODES } from './utils/data.js';
-import { getProducts } from "./services/productService";
+/* import { getProducts } from "./services/productService"; */
 
 
 export default function App() {
@@ -27,24 +27,57 @@ export default function App() {
   const [sessionSavings, setSessionSavings] = useState(0);
 
   // =========================
-// Obtener catálogo desde el Backend
-// =========================
+  // Obtener catálogo desde el Backend
+  // =========================
 
-useEffect(() => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/products");
 
-    async function cargarProductos() {
-        try {
-            const data = await getProducts();
-            setProducts(data);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoadingProducts(false);
-        }
-    }
-    cargarProductos();
+        /**
+         * Mientras el backend todavía no tenga imágenes,
+         * progreso, proveedor, etc.,
+         * reutilizamos los datos mock para completar la UI.
+         */
+        const mappedProducts = response.data.map(product => {
+          const mock = INITIAL_PRODUCTS.find(
+            p => p.name === product.nombre
+          );
 
-}, []);
+          return {
+            id: product._id,
+
+            name: product.nombre,
+            category: product.categoria,
+
+            priceWholesale: product.precioMayorista,
+            priceRetail: product.precioMinorista,
+
+            progressTarget: product.umbralMayorista,
+
+            image: mock?.image || "",
+            description: mock?.description || "",
+            provider: mock?.provider || "Proveedor",
+
+            progressCurrent: mock?.progressCurrent || 0,
+            progressUnit: mock?.progressUnit || "unidades",
+            unit: mock?.unit || "unidad",
+
+            status: mock?.status || "activo"
+          };
+        });
+
+        setProducts(mappedProducts);
+
+      } catch (error) {
+        console.error("Error cargando productos:", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+    fetchProducts();
+  }, []); 
 
   // Invitation code lookup router
   const handleJoinNodeByCode = (code) => {
