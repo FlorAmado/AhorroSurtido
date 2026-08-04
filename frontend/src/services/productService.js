@@ -1,38 +1,38 @@
-/* const API_URL = "http://localhost:5100/products";
+import axios from "axios";
 
-export async function getProducts() {
-    const response = await fetch(API_URL);
+// Configuración base del endpoint Productos
+const API_URL = "http://localhost:5100/productos";
 
-    if (!response.ok) {
-        throw new Error("No fue posible obtener los productos.");
-    }
 
-    const productos = await response.json();
+// Obtener catálogo completo de productos
+export const getProducts = async () => {
+    const response = await axios.get(API_URL);
+    return response.data;
+};
 
-    // Adaptamos el backend al formato esperado por el frontend
-    return productos.map(producto => ({
-        id: producto._id,
 
-        name: producto.nombre,
+// Crear un nuevo producto (Backend listo)
+// Implementar cuando se conecte el formulario
 
-        category: producto.categoria,
+// export const createProduct = async (productData) => {
+//     const response = await axios.post(API_URL, productData);
+//     return response.data;
+// };
 
-        priceWholesale: producto.precioMayorista,
 
-        priceRetail: producto.precioMinorista,
+// Actualizar un producto existente
+// Implementar cuando exista edición
 
-        progressTarget: producto.umbralMayorista,
+// export const updateProduct = async (id, productData) => {
+//     const response = await axios.put(`${API_URL}/${id}`, productData);
+//     return response.data;
+// };
 
-        progressCurrent: 0,
 
-        provider: "Productor Local",
+// Eliminar un producto
+// Implementar cuando exista panel administrador
 
-        description: "Producto disponible para compra comunitaria.",
-
-        image: "https://images.unsplash.com/photo-1506617564039-2f3b650b7010?w=600",
-
-        unit: "unidades",
-
-        status: "activo"
-    }));
-} */
+// export const deleteProduct = async (id) => {
+//     const response = await axios.delete(`${API_URL}/${id}`);
+//     return response.data;
+// };

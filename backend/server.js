@@ -4,12 +4,17 @@ import routesProductos from './src/routes/productoRoutes.js';
 import bodyParser from 'body-parser';
 import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la base de datos
 import authRoutes from './src/routes/authRoutes.js';
-import nodoRoutes from './src/routes/nodoRoutes.js';
+import cors from "cors";
+/* import nodoRoutes from './src/routes/nodoRoutes.js'; */
 
 //RUTA DE NODOS
 import nodoRoutes from './src/routes/nodoRoutes.js';
 
 const app = express();
+
+// Configuración de CORS
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 

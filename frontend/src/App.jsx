@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Header from './components/Header.jsx';
 import NodosTab from './pages/NodosTab.jsx';
 import MayoristasTab from './pages/MayoristasTab.jsx';
 import CartTab from './pages/CartTab.jsx';
 import ImpactTab from './pages/ImpactTab.jsx';
 import { INITIAL_PRODUCTS, INITIAL_NODES } from './utils/data.js';
-/* import { getProducts } from "./services/productService"; */
+import { getProducts } from "./services/productService";
 
 
 export default function App() {
@@ -33,18 +32,34 @@ export default function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/products");
+        const data = await getProducts();
+        console.log("Productos recibidos:", data);
 
         /**
          * Mientras el backend todavía no tenga imágenes,
          * progreso, proveedor, etc.,
          * reutilizamos los datos mock para completar la UI.
          */
-        const mappedProducts = response.data.map(product => {
+        
+        const mappedProducts = data.map(product => {
           const mock = INITIAL_PRODUCTS.find(
             p => p.name === product.nombre
           );
+          
+           console.log(product.nombre, mock);
+          const CATEGORY_IMAGES = {
+          "Almacén":
+              "https://images.unsplash.com/photo-1586201375761-83865001e31c",
 
+          "Lácteos":
+              "https://images.unsplash.com/photo-1550583724-b2692b85b150",
+
+          "Limpieza":
+              "https://images.unsplash.com/photo-1583947582886-f40ec95dd752",
+
+          "Bebidas":
+              "https://images.unsplash.com/photo-1544145945-f90425340c7e"
+};
           return {
             id: product._id,
 
@@ -56,7 +71,8 @@ export default function App() {
 
             progressTarget: product.umbralMayorista,
 
-            image: mock?.image || "",
+            image: mock?.image || CATEGORY_IMAGES[product.categoria] ||
+            "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",
             description: mock?.description || "",
             provider: mock?.provider || "Proveedor",
 
@@ -67,6 +83,8 @@ export default function App() {
             status: mock?.status || "activo"
           };
         });
+
+        console.log("Productos mapeados:", mappedProducts);
 
         setProducts(mappedProducts);
 
