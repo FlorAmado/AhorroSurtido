@@ -72,6 +72,10 @@ export default function Header({ activeTab, setActiveTab, cartCount, currentNode
           
           <button 
             id="user-profile-btn"
+            onClick={() => {
+              setActiveTab('login');
+              setMobileMenuOpen(false);
+            }}
             className="p-1.5 text-[#6b5e52] hover:text-brand-orange border border-[#eae8e4] rounded-full hover:bg-gray-100 transition-colors flex items-center space-x-1"
             title="Mi Cuenta"
           >

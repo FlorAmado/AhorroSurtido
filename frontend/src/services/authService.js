@@ -1,11 +1,11 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5100/api';
 
 export const authService = {
   login: async (credenciales) => {
     const respuesta = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credenciales),
+      body: JSON.stringify(credenciales),                                              
     });
     
     if (!respuesta.ok) {

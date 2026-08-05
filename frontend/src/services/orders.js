@@ -6,9 +6,13 @@ export const confirmarCompra = async (cartItems, nodoId) => {
     productos: cartItems.map(item => ({
       productoId: item.id,
       cantidad: item.qty
-    }))
+}))
   };
 
+  /*
+  TODO comentario
+  ! f
+  */
   const response = await fetch(`${API_URL}/api/orders/cart`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

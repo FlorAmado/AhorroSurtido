@@ -1,0 +1,38 @@
+/* Estilos premium utilizando Vanilla CSS y el color de marca #EC721A */
+
+
+
+
+
+
+
+
+
+
+
+/* Alertas y Feedbacks */
+.alert {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.error-alert {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #f87171;
+}
+
+.success-alert {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #4ade80;
+}
+
+.invite-code {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: #EC721A;
+}

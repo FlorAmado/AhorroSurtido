@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Header from './components/Header.jsx';
 import NodosTab from './pages/NodosTab.jsx';
 import MayoristasTab from './pages/MayoristasTab.jsx';
 import CartTab from './pages/CartTab.jsx';
 import ImpactTab from './pages/ImpactTab.jsx';
+import Login from './pages/Auth/Login.jsx';
+import Register from './pages/Auth/Register.jsx';
+import { AuthContext } from './store/AuthContext.jsx';
 import { INITIAL_PRODUCTS, INITIAL_NODES } from './utils/data.js';
 
 export default function App() {
+  const { nodoActual } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('nodos');
   const [nodes, setNodes] = useState(INITIAL_NODES);
   const [currentNode, setCurrentNode] = useState(INITIAL_NODES[0]); // default is Villa Crespo
@@ -158,7 +162,7 @@ export default function App() {
           activeTab={activeTab} 
           setActiveTab={setActiveTab} 
           cartCount={cartAmount}
-          currentNodeName={currentNode.name}
+          currentNodeName={nodoActual?.location || currentNode.name}
         />
 
         {/* Dynamic main viewport rendering based on state */}
@@ -193,6 +197,20 @@ export default function App() {
             <ImpactTab 
               userSavings={sessionSavings}
               onShareAlert={handleGeneralShareAlert}
+            />
+          )}
+
+          {activeTab === 'login' && (
+            <Login 
+              onSwitchToRegister={() => setActiveTab('register')}
+              onSuccess={() => setActiveTab('nodos')}
+            />
+          )}
+
+          {activeTab === 'register' && (
+            <Register 
+              onSwitchToLogin={() => setActiveTab('login')}
+              onSuccess={() => setActiveTab('nodos')}
             />
           )}
         </main>
