@@ -42,9 +42,12 @@ import apiRoutes from './src/routes/api.js';
 
 const app = express();
 
-// 2. Habilitamos CORS para permitir peticiones del frontend
-app.use(cors()); 
-
+//  Configuración de CORS permitiendo solo a tu frontend
+app.use(cors({
+    origin: 'https://ahorro-surtido.vercel.app', 
+    credentials: true
+}));
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
