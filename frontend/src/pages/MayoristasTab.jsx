@@ -1,12 +1,48 @@
-import React, { useState } from 'react';
-import { Search, ShoppingCart, Plus, Check, Verified, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, ShoppingCart, Plus, Check, Verified, ChevronRight, Loader2 } from 'lucide-react';
+import { productosService } from '../services/productosService';
 
-export default function MayoristasTab({ products, onAddProductToCart, currentNodeName }) {
+export default function MayoristasTab({ onAddProductToCart, currentNodeName }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [successItemName, setSuccessItemName] = useState(null);
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
-  // Search filter
-  const filteredProducts = products.filter(p => 
+  useEffect(() => {
+    const fetchProductos = async () => {
+      try {
+        const data = await productosService.obtenerProductos();
+        
+        // Mapeamos los datos de MongoDB a la estructura que usa tu UI
+        const productosMapeados = data.map(dbProd => ({
+          id: dbProd._id,
+          name: dbProd.nombre,
+          category: dbProd.categoria || 'General',
+          provider: 'Socio Local', // Si luego agregás productor a la DB, lo reemplazás acá
+          priceWholesale: dbProd.precioMayorista,
+          priceRetail: dbProd.precioMinorista,
+          progressTarget: dbProd.umbralMayorista,
+          progressCurrent: 0, // Idealmente esto vendría del backend sumando los pedidos de la semana
+          unit: 'unidades',
+          // Imagen por defecto temporal hasta que le agregues el campo URL a la BD
+          image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop&q=80', 
+          status: 'activo',
+          description: `Compra en cantidad y asegurá el mejor precio para ${dbProd.nombre}.`
+        }));
+        
+        setProductos(productosMapeados);
+      } catch (error) {
+        console.error('Error al cargar productos:', error);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    fetchProductos();
+  }, []);
+
+  // Filtro de búsqueda
+  const filteredProducts = productos.filter(p => 
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.provider.toLowerCase().includes(searchQuery.toLowerCase())
@@ -20,8 +56,17 @@ export default function MayoristasTab({ products, onAddProductToCart, currentNod
     }, 3000);
   };
 
-  // Find daily deal product
-  const heroProduct = products.find(p => p.id === 'p-olive-oil') || products[0];
+  // Tomamos el primer producto del catálogo como oferta destacada (Hero)
+  const heroProduct = productos.length > 0 ? productos[0] : null;
+
+  if (cargando) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-8 h-8 text-brand-orange animate-spin" />
+        <p className="text-[#6b5e52] font-medium text-sm animate-pulse">Cargando catálogo del nodo...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 animate-fade-in" id="mayoristas-tab-container">
@@ -75,7 +120,7 @@ export default function MayoristasTab({ products, onAddProductToCart, currentNod
                   ${heroProduct.priceWholesale.toLocaleString('es-AR')}
                 </span>
                 <span className="text-sm text-[#8a7a6b] line-through">
-                  Precio Minorista: ${heroProduct.priceRetail.toLocaleString('es-AR')}
+                  Minorista: ${heroProduct.priceRetail.toLocaleString('es-AR')}
                 </span>
                 <span className="text-xs text-green-700 font-bold bg-green-50 px-2 py-1 rounded-md">
                   Ahorras {Math.round((1 - heroProduct.priceWholesale / heroProduct.priceRetail) * 100)}%
@@ -155,7 +200,7 @@ export default function MayoristasTab({ products, onAddProductToCart, currentNod
       </div>
 
       {/* Micro success notification */}
-      {successItemName && successItemName !== heroProduct.name && (
+      {successItemName && (!heroProduct || successItemName !== heroProduct.name) && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#2c2520] text-white py-3.5 px-5 rounded-xl shadow-2xl flex items-center space-x-3 border border-stone-700/80 animate-fade-in max-w-sm">
           <div className="bg-brand-orange p-1 rounded-md">
             <Check className="w-4 h-4 text-white" />
@@ -168,7 +213,7 @@ export default function MayoristasTab({ products, onAddProductToCart, currentNod
 
       {/* Main Grid List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" id="products-catalog-grid">
-        {filteredProducts.filter(p => p.id !== 'p-olive-oil').map((product) => {
+        {filteredProducts.filter(p => !heroProduct || p.id !== heroProduct.id).map((product) => {
           const isAgotado = product.status === 'agotado';
           const isFull = product.progressCurrent >= product.progressTarget;
           const isAlmostFull = !isAgotado && !isFull && (product.progressTarget - product.progressCurrent === 1);

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import NodosTab from './pages/NodosTab.jsx';
 import MayoristasTab from './pages/MayoristasTab.jsx';
 import CartTab from './pages/CartTab.jsx';
 import ImpactTab from './pages/ImpactTab.jsx';
+import Login from './pages/Auth/Login.jsx';
+import Register from './pages/Auth/Register.jsx';
 import { INITIAL_PRODUCTS, INITIAL_NODES } from './utils/data.js';
 
-export default function App() {
+function Dashboard() {
   const [activeTab, setActiveTab] = useState('nodos');
   const [nodes, setNodes] = useState(INITIAL_NODES);
   const [currentNode, setCurrentNode] = useState(INITIAL_NODES[0]); // default is Villa Crespo
@@ -58,7 +61,6 @@ export default function App() {
   // Add a product units to cooperative cart and increment the progress bar!
   const handleAddProductToCart = (product) => {
     // 1. Update the product's progress bar in our state
-    // ← AGREGÁS ESTO: si ya llegó al límite, no hace nada
     if (product.progressCurrent >= product.progressTarget) return;
 
     setProducts(prevProducts => 
@@ -138,7 +140,7 @@ export default function App() {
   const handleGeneralShareAlert = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'EcoSurtido / AhorroSurtido',
+        title: 'AhorroSurtido',
         text: `¡Hola! Me uní al Nodo ${currentNode.name} en AhorroSurtido y ahorré un montón comprando al por mayor en grupo. ¡Súmate usando la invitación!`,
         url: window.location.href
       }).catch(console.error);
@@ -205,5 +207,17 @@ export default function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      {/* Fallback route redirige siempre al dashboard */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 }

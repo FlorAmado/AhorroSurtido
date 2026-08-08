@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 @theme {
   --color-brand-orange: #EC721A;
   --color-brand-orange-light: #fef0e6;
