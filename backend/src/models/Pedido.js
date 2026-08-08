@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const pedidoSchema = new mongoose.Schema({
     usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true },
@@ -15,4 +15,4 @@ const pedidoSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Pedido', pedidoSchema);
+export default mongoose.model('Pedido', pedidoSchema);

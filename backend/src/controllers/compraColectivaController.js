@@ -1,12 +1,14 @@
-const Pedido = require('../models/Pedido');
-const CompraColectiva = require('../models/CompraColectiva');
-const Producto = require('../models/Producto');
+import Pedido from '../models/Pedido.js';
+import CompraColectiva from '../models/CompraColectiva.js';
+import Producto from '../models/Producto.js';
 
-// POST /api/compras-colectivas/forzar-cierre
-const forzarCierre = async (req, res) => {
+// POST /api/compras-colectivas/:id/forzar-cierre
+export const forzarCierre = async (req, res) => {
     try {
-        const { nodoId } = req.body;
-        // Nota: El middleware authDuenio ya validó que req.usuario.id == nodo.duenioId
+        // Extraemos el nodoId de los parámetros de la URL, igual que el middleware
+        const nodoId = req.params.id; 
+        
+        // Nota: El middleware esDuenioDelNodo ya validó que req.usuario.id == nodo.duenioId
 
         // FASE 1: Recolección y Cancelación
         await Pedido.updateMany(
@@ -87,5 +89,3 @@ const forzarCierre = async (req, res) => {
         return res.status(500).json({ error: 'Error crítico en el algoritmo de cierre.' });
     }
 };
-
-module.exports = { forzarCierre };

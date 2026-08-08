@@ -1,7 +1,7 @@
-const Pedido = require('../models/Pedido');
+import Pedido from '../models/Pedido.js'; // <-- Cambiado a import con extensión .js
 
 // PUT /api/pedidos/:id/listo
-const confirmarPedido = async (req, res) => {
+export const confirmarPedido = async (req, res) => { // <-- Cambiado a export const
     try {
         const { id } = req.params;
         const usuarioId = req.usuario.id;
@@ -25,5 +25,3 @@ const confirmarPedido = async (req, res) => {
         return res.status(500).json({ error: 'Error interno del servidor al confirmar pedido.' });
     }
 };
-
-module.exports = { confirmarPedido };
