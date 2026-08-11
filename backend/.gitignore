@@ -3,8 +3,6 @@ node_modules/
 
 # Variables de entorno y secretos
 .env
-.env*
-!.env.example
 
 # Logs de npm
 npm-debug.log*

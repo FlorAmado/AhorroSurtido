@@ -53,3 +53,4 @@ usuarioSchema.methods.generarToken = function () {
 };
 
 export default mongoose.model('Usuario', usuarioSchema);
+

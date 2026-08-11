@@ -8,21 +8,60 @@ import { verificarToken } from '../middlewares/authMiddleware.js'
 const router = express.Router();
 
 /**
+ * RUTA: GET /nodos/mis-nodos
+ * DESCRIPCIÓN: Devuelve los nodos donde el usuario autenticado es el dueño.
+ */
+router.get('/mis-nodos', verificarToken, async (req, res) => {
+    try {
+        const duenioId = req.usuario?.id;
+        const nodos = await Nodo.find({ duenioId })
+            .populate('miembrosPendientes', 'nombre email')
+            .populate('members', 'nombre email');
+
+        return res.status(200).json({ success: true, nodos });
+    } catch (error) {
+        console.error('Error al obtener nodos del dueño:', error);
+        return res.status(500).json({ success: false, message: 'Error interno del servidor.' });
+    }
+});
+
+/**
+ * RUTA: GET /nodos/:id
+ * DESCRIPCIÓN: Devuelve un nodo por su ID (solo si el usuario autenticado es el dueño).
+ */
+router.get('/:id', verificarToken, esDuenioDelNodo, async (req, res) => {
+    try {
+        const nodo = await Nodo.findById(req.params.id)
+            .populate('miembrosPendientes', 'nombre email')
+            .populate('members', 'nombre email');
+
+        if (!nodo) {
+            return res.status(404).json({ success: false, message: 'Nodo no encontrado.' });
+        }
+
+        return res.status(200).json({ success: true, nodo });
+    } catch (error) {
+        console.error('Error al obtener el nodo:', error);
+        return res.status(500).json({ success: false, message: 'Error interno del servidor.' });
+    }
+});
+
+/**
  * RUTA: POST /api/nodos
  * DESCRIPCIÓN: Crea un nuevo nodo vecinal, genera su código único y asigna al creador como admin.
  */
 router.post('/', verificarToken, async (req, res) => {
     try { 
         // Se extrae por body los datos y el límite exigido por la épica
-        const { nombre, location, limiteMiembros, adminId } = req.body;
+        const { nombre, location, limiteMiembros } = req.body;
         
-        // Prioridad al ID del token de autenticación; respaldo en adminId del body
-        const duenioId = req.usuario?.id || adminId;
+        // El creador del nodo será el dueño (cualquier usuario logueado)
+        const duenioId = req.usuario?.id;
 
         if (!nombre || !location || !limiteMiembros || !duenioId) {
             return res.status(400).json({ 
                 success: false, 
-                message: 'El nombre, la ubicación, el límite de miembros y el ID del dueño son obligatorios.' 
+                message: 'El nombre, la ubicación, el límite de miembros y estar logueado son obligatorios.' 
             });
         }
 
@@ -140,7 +179,7 @@ router.post('/join', verificarToken, async (req, res) => {
                 message: 'Tu solicitud ya fue enviada y está pendiente de aprobación por el Dueño.'
             });
         }
-
+        
         // Validación: Que el nodo no haya alcanzado el límite fijado
         if (nodo.members.length >= nodo.limiteMiembros) {
             return res.status(400).json({
@@ -215,49 +254,6 @@ router.put('/:id/approve', verificarToken, esDuenioDelNodo, async (req, res) => 
     } catch (error) {
         console.error('Error en endpoint de aprobación:', error);
         return res.status(500).json({ success: false, message: 'Error interno al procesar la aprobación.' });
-    }
-});
-
-/**
- * RUTA: PUT /api/nodos/:id/capacidad
- * DESCRIPCIÓN: Permite al Dueño editar el límite numérico de miembros permitidos.
- */
-router.put('/:id/capacidad', verificarToken, esDuenioDelNodo, async (req, res) => {
-    try {
-        const { nuevoLimite } = req.body;
-        const nodo = req.nodo; // Obtenido del middleware
-
-        if (!nuevoLimite) {
-            return res.status(400).json({ success: false, message: 'Debe proporcionar el nuevo límite.' });
-        }
-
-        const limiteNum = Number(nuevoLimite);
-
-        // Validación de límites globales (2 - 50)
-        if (limiteNum < 2 || limiteNum > 50) {
-            return res.status(400).json({ success: false, message: 'El nuevo límite de miembros debe estar entre 2 y 50.' });
-        }
-
-        // Validación de negocio: No puede achicar el grupo por debajo de la cantidad de personas que ya forman parte activa
-        if (limiteNum < nodo.members.length) {
-            return res.status(400).json({
-                success: false,
-                message: `El nuevo límite no puede ser menor a la cantidad de miembros activos que ya integran el nodo (${nodo.members.length}).`
-            });
-        }
-
-        nodo.limiteMiembros = limiteNum;
-        await nodo.save();
-
-        return res.status(200).json({
-            success: true,
-            message: 'Capacidad del nodo actualizada con éxito.',
-            nodo
-        });
-
-    } catch (error) {
-        console.error('Error al editar capacidad:', error);
-        return res.status(500).json({ success: false, message: 'Error interno al modificar la capacidad.' });
     }
 });
 

@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from 'express';
 import routesProductos from './src/routes/productoRoutes.js';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la base de datos
 import authRoutes from './src/routes/authRoutes.js';
 
@@ -9,6 +10,13 @@ import authRoutes from './src/routes/authRoutes.js';
 import nodoRoutes from './src/routes/nodoRoutes.js';
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  credentials: true
+}));
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
