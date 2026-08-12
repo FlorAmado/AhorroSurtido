@@ -71,8 +71,7 @@ export default function App() {
 
             progressTarget: product.umbralMayorista,
 
-            image: mock?.image || CATEGORY_IMAGES[product.categoria] ||
-            "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",
+            image: product.imagen || mock?.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",            
             description: mock?.description || "",
             provider: mock?.provider || "Proveedor",
 
