@@ -5,10 +5,17 @@ import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la
 
 import routesProductos from './src/routes/productoRoutes.js';
 import authRoutes from './src/routes/authRoutes.js';
+import cors from "cors";
+/* import nodoRoutes from './src/routes/nodoRoutes.js'; */
+
+//RUTA DE NODOS
 import nodoRoutes from './src/routes/nodoRoutes.js';
-import apiRoutes from './src/routes/api.js'; // <-- 1. Importamos las nuevas rutas de la Épica 3
 
 const app = express();
+
+// Configuración de CORS
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
