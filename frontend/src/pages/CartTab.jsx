@@ -7,45 +7,8 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
   const [completedPayment, setCompletedPayment] = useState(false);
 
   // Default base group items in cooperative cart as seen in the mockup image 3:
-  const baseGroupItems = [
-    {
-      id: 'base-avocados',
-      name: 'Organic Hass Avocados - 10kg Box',
-      description: 'Precio mayorista asegurado.',
-      priceWholesale: 45.00,
-      priceRetail: 85.00,
-      image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop&q=80',
-      quantity: 1,
-      addedBy: 'Tú y Maria L.'
-    },
-    {
-      id: 'base-sourdough',
-      name: 'Sourdough Loaves - Pack of 5',
-      description: 'Panadería de origen local.',
-      priceWholesale: 20.00,
-      priceRetail: 35.00,
-      image: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=500&auto=format&fit=crop&q=80',
-      quantity: 1,
-      addedBy: 'Juan P., Ana R. y Tú'
-    },
-    {
-      id: 'base-coffee',
-      name: 'Fairtrade Coffee Beans - 5kg',
-      description: 'Directo de cooperativa.',
-      priceWholesale: 60.00,
-      priceRetail: 110.00,
-      image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80',
-      quantity: 1,
-      addedBy: 'Maria L. y Ana R.'
-    }
-  ];
-
-  // Convert user's dynamically added products from "Mayoristas" tab into USD division units (scale down ARS by e.g. 1000 for visual consistency or keep same)
-  // Let's divide ARS prices by 1000 to keep the exact cents and visual alignment of the mockup image 3!
-  // E.g., Aceite de Oliva is 18500 ARS -> $18.50 USD in our display! 
-  // Arroz is 1200 ARS -> $1.20 USD!
-  // This is a brilliant design decision to keep the layout absolutely identical, clean, and professional.
-  const convertedUserItems = addedProducts.map(({ product, qty }) => ({
+  const baseGroupItems = [];
+const convertedUserItems = addedProducts.map(({ product, qty }) => ({
     id: product.id,
     name: product.name,
     description: `Bulto iniciado con ${product.provider}.`,
@@ -60,42 +23,33 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
 
   // Math algorithm for the checkout
   const rawGroupWholesaleTotal = allItemsList.reduce((sum, item) => sum + (item.priceWholesale * item.quantity), 0);
-  const groupWholesaleTotal = Number(rawGroupWholesaleTotal.toFixed(2));
+  const groupWholesaleTotal = Number(rawGroupWholesaleTotal.toFixed(3));
 
   const rawGroupRetailTotal = allItemsList.reduce((sum, item) => sum + (item.priceRetail * item.quantity), 0);
-  const groupRetailTotal = Number(rawGroupRetailTotal.toFixed(2));
+  const groupRetailTotal = Number(rawGroupRetailTotal.toFixed(3));
 
   const shippingFee = 5.00;
 
-  // Let's calculate Member Shares
-  // Base cost division for the group items:
-  // Tú items: 20% of the base group plus 100% of user-added items!
-  // Let's simulate:
-  // Base wholesale total = $125.00
-  // "Tú" has 20% of the base items in their share, which translates to $25.00 item subtotal!
-  // Maria L.: has 40% of base items, which is $50.00 item subtotal.
-  // Juan P.: has 15% of base items, which is $18.75 item subtotal.
-  // Ana R.: has 25% of base items, which is $31.25 item subtotal.
-  
+
   const userAddedTotalWholesale = convertedUserItems.reduce((sum, item) => sum + (item.priceWholesale * item.quantity), 0);
   const userAddedTotalRetail = convertedUserItems.reduce((sum, item) => sum + (item.priceRetail * item.quantity), 0);
 
   // Updated sums
-  const youWholesaleShare = Number((25.00 + userAddedTotalWholesale).toFixed(2));
+  const youWholesaleShare = Number((userAddedTotalWholesale).toFixed(3));
   const mariaWholesaleShare = 50.00;
   const juanWholesaleShare = 18.75;
   const anaWholesaleShare = 31.25;
 
   // Calculate percentages
   const totalItemWholesaleSum = youWholesaleShare + mariaWholesaleShare + juanWholesaleShare + anaWholesaleShare;
-  
+
   const calculatedYouPercent = Number(((youWholesaleShare / totalItemWholesaleSum) * 100).toFixed(0));
   const calculatedMariaPercent = Number(((mariaWholesaleShare / totalItemWholesaleSum) * 100).toFixed(0));
   const calculatedJuanPercent = Number(((juanWholesaleShare / totalItemWholesaleSum) * 100).toFixed(0));
   const calculatedAnaPercent = Number(((anaWholesaleShare / totalItemWholesaleSum) * 100).toFixed(0));
 
   // Items counting
-  const youItemCount = 3 + addedProducts.reduce((sum, item) => sum + item.qty, 0);
+  const youItemCount = addedProducts.reduce((sum, item) => sum + item.qty, 0);
 
   const members = [
     {
@@ -134,12 +88,12 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
 
   // Shipping Fee of $5.00 divided equally among the 4 members ($1.25 each)
   const youShippingShare = 1.25;
-  const youFinalAmount = Number((youWholesaleShare + youShippingShare).toFixed(2));
+  const youFinalAmount = Number((youWholesaleShare + youShippingShare).toFixed(3));
 
   // Savings calculation:
   // Standard "Tú" retail equivalent is $45.00 plus user added items retail cost!
-  const youRetailEquivalent = Number((45.00 + userAddedTotalRetail).toFixed(2));
-  const youSavings = Number((youRetailEquivalent - youFinalAmount).toFixed(2));
+  const youRetailEquivalent = Number((6.7 + userAddedTotalRetail).toFixed(3));
+  const youSavings = Number((youRetailEquivalent - youFinalAmount).toFixed(3));
 
   const handlePayClick = async () => {
     setPaymentStep('paying');
@@ -166,13 +120,12 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 animate-fade-in" id="cart-review-tab-container">
-      
+
       {/* Header Utilities */}
       <div className="mb-6 flex justify-between items-center text-xs text-[#8a7a6b] font-semibold">
         <span className="flex items-center space-x-1 uppercase tracking-wider">
-          <span>AhorroSurtido</span>
           <span>•</span>
-          <span>Pedido Colaborativo Abierto</span>
+          <span>Pedido  Abierto</span>
         </span>
         <span className="inline-flex items-center space-x-1 text-teal-600 bg-teal-50 px-2 py-1 rounded-sm border border-teal-100 uppercase">
           <Lock className="w-3.5 h-3.5" />
@@ -181,10 +134,10 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Interactive Column (Bultos breakdown & cost division algorithm) */}
         <div className="lg:col-span-8 space-y-6">
-          
+
           {/* Main Card 1 */}
           <div className="bg-white p-6 rounded-3xl border border-[#eae8e4] shadow-xs">
             <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
@@ -195,7 +148,7 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
                 </h3>
               </div>
               {convertedUserItems.length > 0 && (
-                <button 
+                <button
                   onClick={handleReset}
                   className="text-xs text-red-500 hover:text-red-700 font-semibold flex items-center space-x-1 cursor-pointer"
                   title="Restablecer"
@@ -211,7 +164,7 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
               {allItemsList.map((item) => {
                 const isBase = item.id.startsWith('base-');
                 return (
-                  <div 
+                  <div
                     key={item.id}
                     className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3.5 bg-[#faf9f6] rounded-2xl border border-[#f1efe9] hover:border-[#eae8e4] transition-all gap-4"
                   >
@@ -237,10 +190,10 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
                     <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 self-stretch sm:self-center">
                       <div className="text-right flex flex-col justify-center">
                         <span className="text-base font-black text-[#e15a13] font-display">
-                          ${(item.priceWholesale * item.quantity).toFixed(2)}
+                          ${(item.priceWholesale * item.quantity).toFixed(3)}
                         </span>
                         <span className="text-xs text-[#8a7a6b] font-medium line-through">
-                          Minorista: ${(item.priceRetail * item.quantity).toFixed(2)}
+                          Minorista: ${(item.priceRetail * item.quantity).toFixed(3)}
                         </span>
                       </div>
 
@@ -266,16 +219,16 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
               <div className="flex items-center space-x-2">
                 <span className="p-2 bg-[#e0f2fe] text-sky-700 rounded-xl font-bold">🧮</span>
                 <h3 className="font-display font-extrabold text-lg text-[#2c2520]">
-                  Algoritmo de División de Costos
+                  División de Costos
                 </h3>
               </div>
               <span className="inline-flex self-start sm:self-center items-center px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-teal-700 border border-teal-200">
-                Reparto Justo Activo
+                Reparto Justo
               </span>
             </div>
 
             <p className="text-xs sm:text-sm text-[#5c5044] leading-relaxed mb-6">
-              Los costos se calculan dinámicamente según las cantidades individuales solicitadas del pedido al por mayor, garantizando precios transparentes y justos para todos los miembros de la de comunidad.
+              Los costos se calculan automáticamente según las cantidades individuales solicitadas del pedido por mayor, garantizando transparencia para todos los miembros.
             </p>
 
             {/* Members breakdown grid */}
@@ -283,21 +236,19 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
               {members.map((member) => {
                 const isYou = member.name === 'Tú';
                 return (
-                  <div 
+                  <div
                     key={member.id}
-                    className={`p-4 rounded-2xl border transition-all ${
-                      isYou 
-                        ? 'bg-brand-orange-light/40 border-brand-orange/40 hover:border-brand-orange shadow-xs' 
+                    className={`p-4 rounded-2xl border transition-all ${isYou
+                        ? 'bg-brand-orange-light/40 border-brand-orange/40 hover:border-brand-orange shadow-xs'
                         : 'bg-[#faf9f6] border-[#eae8e4] hover:shadow-xs'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center space-x-3">
-                        <div className={`w-9 h-9 rounded-full font-bold text-xs flex items-center justify-center shrink-0 border ${
-                          isYou 
-                            ? 'bg-brand-orange text-white border-brand-orange' 
+                        <div className={`w-9 h-9 rounded-full font-bold text-xs flex items-center justify-center shrink-0 border ${isYou
+                            ? 'bg-brand-orange text-white border-brand-orange'
                             : 'bg-white border-[#eae8e4] text-[#6b5e52]'
-                        }`}>
+                          }`}>
                           {isYou ? '🙋‍♂️' : member.initials}
                         </div>
                         <div>
@@ -309,12 +260,11 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
                           </p>
                         </div>
                       </div>
-                      
+
                       <div className="text-right">
-                        <span className={`font-display text-base font-extrabold ${
-                          isYou ? 'text-[#e15a13]' : 'text-[#2c2520]'
-                        }`}>
-                          ${(isYou ? youWholesaleShare : (member.id === 'm-maria' ? mariaWholesaleShare : (member.id === 'm-juan' ? juanWholesaleShare : anaWholesaleShare))).toFixed(2)}
+                        <span className={`font-display text-base font-extrabold ${isYou ? 'text-[#e15a13]' : 'text-[#2c2520]'
+                          }`}>
+                          ${(isYou ? youWholesaleShare : (member.id === 'm-maria' ? mariaWholesaleShare : (member.id === 'm-juan' ? juanWholesaleShare : anaWholesaleShare))).toFixed(3)}
                         </span>
                       </div>
                     </div>
@@ -332,20 +282,16 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
             <h3 className="font-display font-extrabold text-[#2c2520] text-lg">
               Resumen del Pedido
             </h3>
-            
+
             {/* Numbers List */}
             <div className="space-y-3.5 text-xs">
               <div className="flex justify-between text-[#6b5e52]">
                 <span>Total del Grupo (Mayorista)</span>
-                <span className="font-mono font-bold text-[#2c2520]">${groupWholesaleTotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-[#6b5e52]">
-                <span>Equivalente Minorista</span>
-                <span className="font-mono text-gray-500">${groupRetailTotal.toFixed(2)}</span>
+                <span className="font-mono font-bold text-[#2c2520]">${totalItemWholesaleSum.toFixed(3)}</span>
               </div>
               <div className="flex justify-between text-[#6b5e52] pb-3 border-b border-[#faf2ee]">
                 <span>Tarifa de Envío (Repartida)</span>
-                <span className="font-mono font-bold text-[#2c2520]">${shippingFee.toFixed(2)}</span>
+                <span className="font-mono font-bold text-[#2c2520]">${shippingFee.toFixed(3)}</span>
               </div>
 
               {/* Your Golden Final cost card block */}
@@ -358,16 +304,16 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
                 </div>
                 <div className="flex justify-between items-baseline pt-1">
                   <span className="font-display font-black text-3xl text-[#e15a13] tracking-tighter">
-                    ${youFinalAmount.toFixed(2)}
+                    ${youFinalAmount.toFixed(3)}
                   </span>
                   <span className="text-[10px] text-[#6b5e52]">
-                    Envío (${youShippingShare.toFixed(2)}) Incluido
+                    Envío (${youShippingShare.toFixed(3)}) Incluido
                   </span>
                 </div>
 
                 <div className="bg-brand-orange text-white rounded-xl py-2 px-3 text-center text-xs font-bold font-sans shadow-xs flex items-center justify-center space-x-1">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>¡Ahorraste ${youSavings.toFixed(2)} comprando en grupo!</span>
+                  <span>¡Ahorraste ${youSavings.toFixed(3)} comprando en grupo!</span>
                 </div>
               </div>
             </div>
@@ -419,7 +365,7 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
       {completedPayment && (
         <div className="fixed inset-0 z-50 bg-[#2c2520]/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
           <div className="bg-white rounded-3xl border border-[#eae8e4] p-6 sm:p-8 max-w-md w-full shadow-2xl relative space-y-6">
-            <button 
+            <button
               onClick={() => setCompletedPayment(false)}
               className="absolute top-4 right-4 p-1.5 hover:bg-stone-100 rounded-full text-stone-400"
             >
@@ -434,7 +380,7 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
                 ¡Gracias por tu aporte!
               </h2>
               <p className="text-sm text-[#5c5044]">
-                Has pagado <strong className="text-brand-orange font-bold font-mono">${youFinalAmount.toFixed(2)}</strong>. Los fondos están custodiados de forma segura hasta que el bulto sea entregado por el socio mayorista en el nodo.
+                Has pagado <strong className="text-brand-orange font-bold font-mono">${youFinalAmount.toFixed(3)}</strong>. Los fondos están custodiados de forma segura hasta que el bulto sea entregado por el socio mayorista en el nodo.
               </p>
             </div>
 
@@ -444,10 +390,10 @@ export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onCo
                 🌟 LOGRO DE COOPERACIÓN DESBLOQUEADO
               </span>
               <p className="font-display text-lg font-extrabold text-[#2c2520]">
-                Ahorraste ${youSavings.toFixed(2)} en esta compra
+                Ahorraste ${youSavings.toFixed(3)} en esta compra
               </p>
               <p className="text-xs text-[#6b5e52]">
-                ¡Comprar en grupo con tu nodo es 45% más económico!
+                ¡Comprar en grupo con tu nodo es mucho más económico!
               </p>
             </div>
 

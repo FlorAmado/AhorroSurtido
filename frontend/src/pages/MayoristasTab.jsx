@@ -44,108 +44,13 @@ export default function MayoristasTab({ products, onAddProductToCart, currentNod
         </div>
       </div>
 
-      {/* Hero Banner (Oferta del Día) */}
-      {!searchQuery && heroProduct && (
-        <div id="hero-offer-banner" className="mb-10 bg-white border border-[#eae8e4] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-shadow">
-          <div className="grid grid-cols-1 lg:grid-cols-12">
-            
-            {/* Hero Left Info */}
-            <div className="p-6 sm:p-10 lg:col-span-7 flex flex-col justify-center space-y-5">
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center space-x-1 bg-amber-500/10 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                  <span className="text-amber-500 font-bold">★</span>
-                  <span>Oferta del Día</span>
-                </span>
-                <span className="inline-flex items-center space-x-1 bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-cyan-100">
-                  <Verified className="w-3.5 h-3.5" />
-                  <span>Socio Mayorista</span>
-                </span>
-              </div>
 
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2c2520] tracking-tight leading-tight">
-                {heroProduct.name}
-              </h2>
-              <p className="text-sm sm:text-base text-[#5c5044] leading-relaxed max-w-xl">
-                {heroProduct.description}
-              </p>
-
-              {/* Price Details */}
-              <div className="flex items-baseline space-x-4">
-                <span className="text-3xl font-black text-brand-orange font-display">
-                  ${heroProduct.priceWholesale.toLocaleString('es-AR')}
-                </span>
-                <span className="text-sm text-[#8a7a6b] line-through">
-                  Precio Minorista: ${heroProduct.priceRetail.toLocaleString('es-AR')}
-                </span>
-                <span className="text-xs text-green-700 font-bold bg-green-50 px-2 py-1 rounded-md">
-                  Ahorras {Math.round((1 - heroProduct.priceWholesale / heroProduct.priceRetail) * 100)}%
-                </span>
-              </div>
-
-              {/* Progress Tracker */}
-              <div className="p-4 bg-brand-bg rounded-2xl border border-[#eae8e4] space-y-2">
-                <div className="flex justify-between text-xs font-bold text-[#2c2520]">
-                  <span>Progreso del bulto (Caja x {heroProduct.progressTarget})</span>
-                  <span className="font-mono">{heroProduct.progressCurrent}/{heroProduct.progressTarget}</span>
-                </div>
-                
-                {/* Visual Progress Bar */}
-                <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-brand-orange transition-all duration-500 ease-out"
-                    style={{ width: `${(heroProduct.progressCurrent / heroProduct.progressTarget) * 100}%` }}
-                  />
-                </div>
-
-                <p className="text-xs text-[#6b5e52]">
-                  {heroProduct.progressCurrent >= heroProduct.progressTarget 
-                    ? '🎉 ¡Bulto cerrado! Garantizado al mejor precio mayorista.'
-                    : `Faltan ${heroProduct.progressTarget - heroProduct.progressCurrent} unidades para completar el bulto cerrado y asegurar el precio mayorista.`
-                  }
-                </p>
-              </div>
-
-              {/* Join action */}
-              <div className="flex items-center space-x-3 pt-2">
-                <button
-                  id={`btnadd-hero-${heroProduct.id}`}
-                  onClick={() => handleAddClick(heroProduct)}
-                  disabled={heroProduct.status === 'agotado'}
-                  className="bg-brand-orange hover:bg-brand-orange-hover text-white font-bold py-3 px-6 rounded-xl shadow-xs transition-all flex items-center space-x-2 shrink-0 cursor-pointer"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  <span>Sumarme al bulto</span>
-                </button>
-                {successItemName === heroProduct.name && (
-                  <span className="text-sm text-green-700 font-medium flex items-center space-x-1 animate-fade-in bg-green-50 px-3 py-2 rounded-lg border border-green-200">
-                    <Check className="w-4 h-4 text-green-700" />
-                    <span>¡Agregado al carrito!</span>
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Hero Right Image */}
-            <div className="lg:col-span-5 relative min-h-[250px] lg:min-h-0 bg-gray-100">
-              <img
-                src={heroProduct.image}
-                alt={heroProduct.name}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </div>
-
-          </div>
-        </div>
-      )}
 
       {/* Main Catalog Header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-[#2c2520] tracking-tight">
-            Comunidad: {currentNodeName || 'Abastos Norte'}
-          </h3>
           <p className="text-xs sm:text-sm text-[#8a7a6b]">
-            Productos disponibles para compra en grupo esta semana.
+            Productos disponibles para comprar en grupo esta semana.
           </p>
         </div>
         <button className="text-brand-orange hover:text-brand-orange-hover text-sm font-semibold flex items-center space-x-1 cursor-pointer">
@@ -295,6 +200,99 @@ export default function MayoristasTab({ products, onAddProductToCart, currentNod
           );
         })}
       </div>
+            {/* Hero Banner (Oferta del Día) */}
+      {!searchQuery && heroProduct && (
+        <div id="hero-offer-banner" className="mb-10 bg-white border border-[#eae8e4] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-shadow">
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            
+            {/* Hero Left Info */}
+            <div className="p-6 sm:p-10 lg:col-span-7 flex flex-col justify-center space-y-5">
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center space-x-1 bg-amber-500/10 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <span className="text-amber-500 font-bold">★</span>
+                  <span>Oferta del Día</span>
+                </span>
+                <span className="inline-flex items-center space-x-1 bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-cyan-100">
+                  <Verified className="w-3.5 h-3.5" />
+                  <span>Socio Mayorista</span>
+                </span>
+              </div>
+
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2c2520] tracking-tight leading-tight">
+                {heroProduct.name}
+              </h2>
+              <p className="text-sm sm:text-base text-[#5c5044] leading-relaxed max-w-xl">
+                {heroProduct.description}
+              </p>
+
+              {/* Price Details */}
+              <div className="flex items-baseline space-x-4">
+                <span className="text-3xl font-black text-brand-orange font-display">
+                  ${heroProduct.priceWholesale.toLocaleString('es-AR')}
+                </span>
+                <span className="text-sm text-[#8a7a6b] line-through">
+                  Precio Minorista: ${heroProduct.priceRetail.toLocaleString('es-AR')}
+                </span>
+                <span className="text-xs text-green-700 font-bold bg-green-50 px-2 py-1 rounded-md">
+                  Ahorras {Math.round((1 - heroProduct.priceWholesale / heroProduct.priceRetail) * 100)}%
+                </span>
+              </div>
+
+              {/* Progress Tracker */}
+              <div className="p-4 bg-brand-bg rounded-2xl border border-[#eae8e4] space-y-2">
+                <div className="flex justify-between text-xs font-bold text-[#2c2520]">
+                  <span>Progreso del bulto (Caja x {heroProduct.progressTarget})</span>
+                  <span className="font-mono">{heroProduct.progressCurrent}/{heroProduct.progressTarget}</span>
+                </div>
+                
+                {/* Visual Progress Bar */}
+                <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-brand-orange transition-all duration-500 ease-out"
+                    style={{ width: `${(heroProduct.progressCurrent / heroProduct.progressTarget) * 100}%` }}
+                  />
+                </div>
+
+                <p className="text-xs text-[#6b5e52]">
+                  {heroProduct.progressCurrent >= heroProduct.progressTarget 
+                    ? '🎉 ¡Bulto cerrado! Garantizado al mejor precio mayorista.'
+                    : `Faltan ${heroProduct.progressTarget - heroProduct.progressCurrent} unidades para completar el bulto cerrado y asegurar el precio mayorista.`
+                  }
+                </p>
+              </div>
+
+              {/* Join action */}
+              <div className="flex items-center space-x-3 pt-2">
+                <button
+                  id={`btnadd-hero-${heroProduct.id}`}
+                  onClick={() => handleAddClick(heroProduct)}
+                  disabled={heroProduct.status === 'agotado'}
+                  className="bg-brand-orange hover:bg-brand-orange-hover text-white font-bold py-3 px-6 rounded-xl shadow-xs transition-all flex items-center space-x-2 shrink-0 cursor-pointer"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  <span>Sumarme al bulto</span>
+                </button>
+                {successItemName === heroProduct.name && (
+                  <span className="text-sm text-green-700 font-medium flex items-center space-x-1 animate-fade-in bg-green-50 px-3 py-2 rounded-lg border border-green-200">
+                    <Check className="w-4 h-4 text-green-700" />
+                    <span>¡Agregado al carrito!</span>
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Hero Right Image */}
+            <div className="lg:col-span-5 relative min-h-[250px] lg:min-h-0 bg-gray-100">
+              <img
+                src={heroProduct.image}
+                alt={heroProduct.name}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+          </div>
+        </div>
+      )}
 
       {/* Bottom Wholesale Partner Promo Card (Socio Mayorista) */}
       <div id="partner-promo-card" className="bg-[#f5eeda] border border-[#e3d0bf] rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">

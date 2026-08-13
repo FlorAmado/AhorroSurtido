@@ -76,46 +76,34 @@ export default function NodosTab({ nodesList, currentNode, onChangeNode, onJoinN
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
         
         {/* Left Column (Content & Form) */}
-        <div className="col-span-1 lg:col-span-7 flex flex-col justify-center space-y-8">
-
-          {/* Feature Highlight Boxes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Unique Card 1 */}
-            <div className="p-5 bg-white rounded-2xl border border-[#eae8e4] hover:shadow-md transition-shadow flex flex-col space-y-2">
-              <div className="bg-brand-orange-light w-10 h-10 rounded-xl flex items-center justify-center text-brand-orange">
-                <PiggyBank className="w-5.5 h-5.5" />
-              </div>
-              <h3 className="font-display text-lg font-bold text-[#2c2520] pt-1">Ahorren Juntos</h3>
-              <p className="text-sm text-[#6b5e52] leading-relaxed">
-                Accede a precios mayoristas agrupando compras con tu nodo vecinal.
-              </p>
-            </div>
-
-            {/* Unique Card 2 */}
-            <div className="p-5 bg-white rounded-2xl border border-[#eae8e4] hover:shadow-md transition-shadow flex flex-col space-y-2">
-              <div className="bg-green-50 w-10 h-10 rounded-xl flex items-center justify-center text-green-600 border border-green-100">
-                <Leaf className="w-5.5 h-5.5" />
-              </div>
-              <h3 className="font-display text-lg font-bold text-[#2c2520] pt-1">Menos Residuos</h3>
-              <p className="text-sm text-[#6b5e52] leading-relaxed">
-                Las entregas mayoristas reducen significativamente el embalaje plastico individual.
-              </p>
-            </div>
+        <div className="col-span-1 lg:col-span-7 flex flex-col justify-center space-y-6">
+          {/* Heading */}
+          <div className="space-y-4">
+            <h1 className="font-display text-4xl sm:text-5xl font-black text-[#2c2520] tracking-tight leading-tight">
+              Bienvenido al Nodo de <br />
+              <span className="relative inline-block text-brand-orange mt-2">
+                {nodoActual?.location || currentNode.name}
+                <svg className="absolute left-0 bottom-[-6px] w-full h-2.5 text-brand-orange/35" viewBox="0 0 100 10" preserveAspectRatio="none">
+                  <path d="M0,5 Q50,11 100,5" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
+                </svg>
+              </span>
+            </h1>
           </div>
+
           
           {/* Selector de Acciones (Tabs) */}
           <div className="flex space-x-6 mb-4 border-b border-gray-200">
-            <button 
-              onClick={() => setShowCreateForm(false)}
-              className={`font-semibold pb-2 border-b-2 transition-colors ${!showCreateForm ? 'border-brand-orange text-brand-orange' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
-            >
-              Unirse a un Nodo
-            </button>
             <button 
               onClick={() => setShowCreateForm(true)}
               className={`font-semibold pb-2 border-b-2 transition-colors ${showCreateForm ? 'border-brand-orange text-brand-orange' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
             >
               Crear Nuevo Nodo
+            </button>
+            <button 
+              onClick={() => setShowCreateForm(false)}
+              className={`font-semibold pb-2 border-b-2 transition-colors ${!showCreateForm ? 'border-brand-orange text-brand-orange' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            >
+              Unirse a un Nodo
             </button>
           </div>
 
@@ -169,26 +157,33 @@ export default function NodosTab({ nodesList, currentNode, onChangeNode, onJoinN
               </form>
             </div>
           )}
-          {/* Badge */}
-          <div className="self-start inline-flex items-center space-x-2 bg-[#fdf0ed] text-[#e15a13] px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-[#fbdcd5]">
-            <MapPin className="w-3.5 h-3.5 text-brand-orange" />
-            <span>Compras Impulsadas por la Comunidad</span>
-          </div>
-
-          {/* Heading */}
-          <div className="space-y-4">
-            <h1 className="font-display text-4xl sm:text-5xl font-black text-[#2c2520] tracking-tight leading-tight">
-              Bienvenido al Nodo de <br />
-              <span className="relative inline-block text-brand-orange mt-2">
-                {nodoActual?.location || currentNode.name}
-                <svg className="absolute left-0 bottom-[-6px] w-full h-2.5 text-brand-orange/35" viewBox="0 0 100 10" preserveAspectRatio="none">
-                  <path d="M0,5 Q50,11 100,5" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
-                </svg>
-              </span>
-            </h1>
-          </div>
+          
 
           
+          {/* Feature Highlight Boxes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Unique Card 1 */}
+            <div className="p-5 bg-white rounded-2xl border border-[#eae8e4] hover:shadow-md transition-shadow flex flex-col space-y-2">
+              <div className="bg-brand-orange-light w-10 h-10 rounded-xl flex items-center justify-center text-brand-orange">
+                <PiggyBank className="w-5.5 h-5.5" />
+              </div>
+              <h3 className="font-display text-lg font-bold text-[#2c2520] pt-1">Ahorren Juntos</h3>
+              <p className="text-sm text-[#6b5e52] leading-relaxed">
+                Accede a precios mayoristas agrupando compras con tu nodo vecinal.
+              </p>
+            </div>
+
+            {/* Unique Card 2 */}
+            <div className="p-5 bg-white rounded-2xl border border-[#eae8e4] hover:shadow-md transition-shadow flex flex-col space-y-2">
+              <div className="bg-green-50 w-10 h-10 rounded-xl flex items-center justify-center text-green-600 border border-green-100">
+                <Leaf className="w-5.5 h-5.5" />
+              </div>
+              <h3 className="font-display text-lg font-bold text-[#2c2520] pt-1">Menos Residuos</h3>
+              <p className="text-sm text-[#6b5e52] leading-relaxed">
+                Las entregas mayoristas reducen significativamente el embalaje plastico.
+              </p>
+            </div>
+          </div>
 
           {/* Panel de Administración (Solo para dueños) */}
           {isOwner && (
@@ -279,11 +274,10 @@ export default function NodosTab({ nodesList, currentNode, onChangeNode, onJoinN
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-[#2c2520]">
-                Nodo {currentNode.name}
+                Nodo {nodoActual?.location || currentNode.name}
               </h4>
-              <p className="text-xs text-[#6b5e52]">
-                {currentNode.membersCount} miembros ahorrando activamente
-              </p>
+              <p className="text-xs text-[#6b5e52]"> 
+                Nodo actualmente activo              </p>
             </div>
           </div>
         </div>

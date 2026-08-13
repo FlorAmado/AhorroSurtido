@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { User, Mail, Lock } from 'lucide-react';
 import { AuthContext } from '../../store/AuthContext';
+import logoImg from '../../../logo.png';
 
 export default function Register({ onSwitchToLogin, onSuccess }) {
   const [nombre, setNombre] = useState('');
@@ -30,6 +31,9 @@ export default function Register({ onSwitchToLogin, onSuccess }) {
     <div className="min-h-screen bg-brand-bg flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-2xl border border-[#eae8e4] shadow-sm p-8">
         <div className="text-center mb-8">
+          <div className="flex justify-center mb-3">
+            <img src={logoImg} alt="AhorroSurtido Logo" className="w-12 h-12 object-contain" />
+          </div>
           <span className="font-display text-2xl font-black tracking-tight text-[#2c2520]">
             Ahorro<span className="text-brand-orange">Surtido</span>
           </span>

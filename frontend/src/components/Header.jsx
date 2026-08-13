@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Bell, User, Menu, X } from 'lucide-react';
+import logoImg from '../../logo.png';
 
 export default function Header({ activeTab, setActiveTab, cartCount, currentNodeName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const tabs = [
     { id: 'nodos', label: 'Nodos' },
-    { id: 'mayoristas', label: 'Mayoristas' },
+    { id: 'mayoristas', label: 'Productos' },
     { id: 'carrito', label: 'Mi Carrito', badge: cartCount > 0 ? cartCount : undefined },
     { id: 'impacto', label: 'Impacto' }
   ];
@@ -17,9 +18,14 @@ export default function Header({ activeTab, setActiveTab, cartCount, currentNode
         {/* Logo */}
         <div 
           onClick={() => setActiveTab('nodos')} 
-          className="flex items-center space-x-2 cursor-pointer select-none"
+          className="flex items-center space-x-2.5 cursor-pointer select-none"
           id="header-logo-container"
         >
+          <img 
+            src={logoImg} 
+            alt="AhorroSurtido Logo" 
+            className="w-8 h-8 sm:w-9 sm:h-9 object-contain shrink-0" 
+          />
           <span className="font-display text-2xl font-black tracking-tight text-[#2c2520]">
             Ahorro<span className="text-brand-orange">Surtido</span>
           </span>
