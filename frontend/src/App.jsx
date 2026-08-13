@@ -287,7 +287,7 @@ export default function App() {
           {activeTab === 'register' && (
             <Register 
               onSwitchToLogin={() => setActiveTab('login')}
-              onSuccess={() => {}}
+              onSuccess={() => setActiveTab('login')}
             />
           )}
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Lock, RotateCcw, Check, CheckCircle2, Share2, Sparkles, X, Trash2, Loader2 } from 'lucide-react';
+import { Lock, RotateCcw, Check, CheckCircle2, Share2, Sparkles, X, Trash2, Loader2, CreditCard } from 'lucide-react';
 import { confirmarCompra } from '../services/orders.js';
 
 export default function CartTab({ addedProducts, onRemoveItem, onClearCart, onConfirmSuccess }) {
-  const [paymentStep, setPaymentStep] = useState('idle');
+  const [paymentStep, setPaymentStep] = useState('idle'); // 'idle' | 'select_method' | 'paying' | 'success'
+  const [paymentMethod, setPaymentMethod] = useState('debito'); // 'debito' | 'credito'
   const [completedPayment, setCompletedPayment] = useState(false);
 
   // Default base group items in cooperative cart as seen in the mockup image 3:
@@ -115,6 +116,7 @@ const convertedUserItems = addedProducts.map(({ product, qty }) => ({
   const handleReset = () => {
     onClearCart();
     setPaymentStep('idle');
+    setPaymentMethod('debito');
     setCompletedPayment(false);
   };
 
@@ -323,12 +325,80 @@ const convertedUserItems = addedProducts.map(({ product, qty }) => ({
               {paymentStep === 'idle' ? (
                 <button
                   id="confirm-pay-coop-btn"
-                  onClick={handlePayClick}
+                  onClick={() => setPaymentStep('select_method')}
                   className="w-full bg-brand-orange hover:bg-brand-orange-hover text-white py-4 px-4 rounded-xl text-sm font-bold shadow-xs transition-all flex items-center justify-center space-x-2.5 cursor-pointer"
                 >
                   <Lock className="w-4 h-4" />
                   <span>Confirmar y Pagar Mi Parte</span>
                 </button>
+              ) : paymentStep === 'select_method' ? (
+                <div className="bg-[#faf9f6] p-4 rounded-2xl border border-[#eae8e4] space-y-3 animate-fade-in shadow-xs">
+                  <div className="flex justify-between items-center pb-2 border-b border-[#eae8e4]">
+                    <span className="text-xs font-bold text-[#2c2520] flex items-center space-x-1.5">
+                      <CreditCard className="w-4 h-4 text-brand-orange" />
+                      <span>Elegir forma de pago</span>
+                    </span>
+                    <button 
+                      onClick={() => setPaymentStep('idle')} 
+                      className="text-[11px] font-medium text-[#8a7a6b] hover:text-[#2c2520] underline cursor-pointer"
+                    >
+                      Volver
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    {/* Option 1: Tarjeta de Débito */}
+                    <div 
+                      onClick={() => setPaymentMethod('debito')}
+                      className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
+                        paymentMethod === 'debito'
+                          ? 'bg-brand-orange-light/50 border-brand-orange text-[#2c2520] shadow-2xs'
+                          : 'bg-white border-[#eae8e4] text-[#5c5044] hover:bg-stone-50'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                          paymentMethod === 'debito' ? 'border-brand-orange bg-brand-orange' : 'border-stone-300 bg-white'
+                        }`}>
+                          {paymentMethod === 'debito' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </div>
+                        <CreditCard className={`w-4 h-4 ${paymentMethod === 'debito' ? 'text-brand-orange' : 'text-[#8a7a6b]'}`} />
+                        <span className="text-xs font-semibold">Tarjeta de Débito</span>
+                      </div>
+                      <span className="text-[10px] text-[#8a7a6b] font-mono">Sin recargo</span>
+                    </div>
+
+                    {/* Option 2: Tarjeta de Crédito */}
+                    <div 
+                      onClick={() => setPaymentMethod('credito')}
+                      className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
+                        paymentMethod === 'credito'
+                          ? 'bg-brand-orange-light/50 border-brand-orange text-[#2c2520] shadow-2xs'
+                          : 'bg-white border-[#eae8e4] text-[#5c5044] hover:bg-stone-50'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                          paymentMethod === 'credito' ? 'border-brand-orange bg-brand-orange' : 'border-stone-300 bg-white'
+                        }`}>
+                          {paymentMethod === 'credito' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </div>
+                        <CreditCard className={`w-4 h-4 ${paymentMethod === 'credito' ? 'text-brand-orange' : 'text-[#8a7a6b]'}`} />
+                        <span className="text-xs font-semibold">Tarjeta de Crédito</span>
+                      </div>
+                      <span className="text-[10px] text-[#8a7a6b] font-mono">1 pago</span>
+                    </div>
+                  </div>
+
+                  <button
+                    id="pay-selected-method-btn"
+                    onClick={handlePayClick}
+                    className="w-full mt-2 bg-brand-orange hover:bg-brand-orange-hover text-white py-3.5 px-4 rounded-xl text-sm font-bold shadow-xs transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                  >
+                    <Lock className="w-4 h-4" />
+                    <span>Pagar (${youFinalAmount.toFixed(3)})</span>
+                  </button>
+                </div>
               ) : paymentStep === 'paying' ? (
                 <button
                   disabled
@@ -380,7 +450,7 @@ const convertedUserItems = addedProducts.map(({ product, qty }) => ({
                 ¡Gracias por tu aporte!
               </h2>
               <p className="text-sm text-[#5c5044]">
-                Has pagado <strong className="text-brand-orange font-bold font-mono">${youFinalAmount.toFixed(3)}</strong>. Los fondos están custodiados de forma segura hasta que el bulto sea entregado por el socio mayorista en el nodo.
+                Has pagado <strong className="text-brand-orange font-bold font-mono">${youFinalAmount.toFixed(3)}</strong> con <strong className="text-[#2c2520]">{paymentMethod === 'debito' ? 'Tarjeta de Débito' : 'Tarjeta de Crédito'}</strong>. Los fondos están custodiados de forma segura hasta que el bulto sea entregado por el socio mayorista en el nodo.
               </p>
             </div>
 

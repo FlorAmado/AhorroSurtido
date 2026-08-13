@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { User, Mail, Lock } from 'lucide-react';
+import { User, Mail, Lock, CheckCircle2 } from 'lucide-react';
 import { AuthContext } from '../../store/AuthContext';
 import logoImg from '../../../logo.png';
 
@@ -8,18 +8,30 @@ export default function Register({ onSwitchToLogin, onSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [mensajeExito, setMensajeExito] = useState('');
   const [cargando, setCargando] = useState(false);
 
-  const { register } = useContext(AuthContext);
+  const { register, logout } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setMensajeExito('');
     setCargando(true);
 
     try {
       await register(nombre, email, password);
-      if (onSuccess) onSuccess();
+      // Cerramos la sesión automática para que el usuario pueda iniciar sesión manualmente
+      logout();
+      setMensajeExito('¡Cuenta creada con éxito! Redirigiendo al inicio de sesión...');
+      
+      setTimeout(() => {
+        if (onSuccess) {
+          onSuccess();
+        } else if (onSwitchToLogin) {
+          onSwitchToLogin();
+        }
+      }, 1500);
     } catch (err) {
       setError(err.message || 'No se pudo completar el registro. Intentá nuevamente.');
     } finally {
@@ -97,11 +109,18 @@ export default function Register({ onSwitchToLogin, onSuccess }) {
 
           <button
             type="submit"
-            disabled={cargando}
+            disabled={cargando || Boolean(mensajeExito)}
             className="w-full py-2.5 rounded-xl bg-brand-orange text-white font-semibold hover:bg-brand-orange-hover transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
           >
             {cargando ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
+
+          {mensajeExito && (
+            <div className="p-3 bg-green-50 border border-green-200 text-green-700 rounded-xl text-center text-sm font-semibold flex items-center justify-center space-x-2 animate-fade-in">
+              <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
+              <span>{mensajeExito}</span>
+            </div>
+          )}
 
           {error && (
             <p className="text-sm text-red-600 text-center">{error}</p>
