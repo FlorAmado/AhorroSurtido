@@ -4,6 +4,7 @@ import NodosTab from './pages/NodosTab.jsx';
 import MayoristasTab from './pages/MayoristasTab.jsx';
 import CartTab from './pages/CartTab.jsx';
 import ImpactTab from './pages/ImpactTab.jsx';
+import AboutUs from './pages/Nosotros.jsx';
 import Login from './pages/Auth/Login.jsx';
 import Register from './pages/Auth/Register.jsx';
 import { AuthContext } from './store/AuthContext.jsx';
@@ -211,6 +212,12 @@ export default function App() {
             <Register 
               onSwitchToLogin={() => setActiveTab('login')}
               onSuccess={() => setActiveTab('nodos')}
+            />
+          )}
+
+          {activeTab === 'nosotros' && (
+            <AboutUs
+              currentNodeName={`Nodo ${currentNode.name}`} 
             />
           )}
         </main>

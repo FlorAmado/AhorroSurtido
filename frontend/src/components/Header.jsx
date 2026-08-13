@@ -8,7 +8,8 @@ export default function Header({ activeTab, setActiveTab, cartCount, currentNode
     { id: 'nodos', label: 'Nodos' },
     { id: 'mayoristas', label: 'Mayoristas' },
     { id: 'carrito', label: 'Mi Carrito', badge: cartCount > 0 ? cartCount : undefined },
-    { id: 'impacto', label: 'Impacto' }
+    { id: 'impacto', label: 'Impacto' },
+    { id: 'nosotros', label: 'Nosotros' }
   ];
 
   return (
