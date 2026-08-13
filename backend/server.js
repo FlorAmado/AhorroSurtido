@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dbClient from './src/config/dbClient.js'; // Importamos la conexión a la base de datos
 import authRoutes from './src/routes/authRoutes.js';
-import cors from "cors";
+
 
 //RUTA DE NODOS
 import nodoRoutes from './src/routes/nodoRoutes.js';
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/productos', routesProductos)
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/nodes', nodoRoutes);
 
 app.use('/nodos', nodoRoutes); // ruta nodos
