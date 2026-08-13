@@ -1,23 +1,23 @@
 # Diagrama entidad-relación
 ### Diagrama entidad-relación de la base de datos de AhorroSurtido en español: usuarios, nodos, productos, pedidos, items_pedido y compras_colectivas con claves primarias, foráneas y cardinalidad
 
-[![](https://mermaid.ink/img/pako:eNqtlVFv2jAQx7-K5Yk3WgWSBsgbg1ZDW0dVaB8mpMrEF_CW2NHF0UZpvvscEmggKWqlvsR27nd3_9jny5b6igP1aKu1XeBCEiKk0B4pF4QsqF5DBAvqmemSJWbWPrE9MhRsGUKSQwfH3ByjiBhuRipUWET4EtiBE7iVIBXuq0IOWKUHPrNZcEKHQkIVcpe9bt86gTT801WoE3QHdq8GoRYnAuEKerA8AQMl9Q2LRLgpqITJ5CIBFEbbnsuKyW7IWq18ABwLtkIW7Zmf0_F0Rl5eLi7UljzMHob3E7POI2oBEkgkIFqiSl6jHqDS6e56PBmXPggsFM_sFT4KXyWNiDR-CxxNb-_uh7On0fTH9Wg-eRwWPr4AxIpPA5YHeDnO5CuZqFDwiuPeXNKT-fXt7Kl4uXfZfX3F4346fhjNXyXWfBACQJC-YFwRkIVrbc8qxUjIdPkbfD3h5Elwcve9ako0CrkiUpnNhwYDREyEDe9jliR_TdF-Y8m6MZVUXJnhpikbqvCkdPbn8lmyzdUWK9UYzDe1wxUeacvq2_9pSpiGlTJtomqTabQEJDGCL9StkMae6DME27xJmCeysEZkpyX43u85mNIkNd2tfobvOmEwUriqiTkq5g8rioELfkZQjIqnvq4T5Vb5zNw2zvib-zyMQ-E36W5oAB9W37hdZXqttDnDM3VQAGfKgK0VoprnWNXKTfWRAPw1G-U97VCgGW3TFQpOvYCFCbRpBGhuulnTbU4c_fs4wz-mzcjcKWbyl1IR9TSmxg1VulofgqRxnq9s_AcE5O7XlkpNPce2djGot6X_qNe1upeO63Tdge24fcty-226oZ7tXrpW5-rK6VmOZdnWIGvT513WzqXdd3v9gd3t9AcDp-Nk_wEvy14J?type=png)](https://mermaid.live/edit#pako:eNqtld9v2jAQx_8VyxNvtApJCJA3Bq2Gto6q0D5MSJUTX8BbYkcXRyul_O91-NVAUtRKfYnt3OfuvrHPlxUNFQfq00ZjNcOZJERIoX2yWxAyo3oBCcyob6YBy8yseWJ7YChYEENWQAfHwpyiSBguBypWuI3wLXIiN_JKQUrcd4UcsEz3Quaw6ISOhYQy5AUdu2udQBqedBlqRXbP6VQg1OJEILShA8EJGCmpr1ki4uWWypjMLjJAYbTtufV2shnWjUYxAA4FmyNL9szv8XA8IS8vFxdqRe4n9_27kVkXEbUACSQRkASosreoB2jndHs1HA13PggsFs_sDT4KXyaNiDx9DxyMb27v-pPHwfjX1WA6euhvfUIBiCWfGqwI8HKcKVQyU7HgJce9eUePplc3k8fty73L5utLHnfj4f1g-iax4oMQAYIMBeOKgNy6VvasVIyEjIO_EOoRJ4-Ck9ufZVOmUcg5kcpsPtQYIGEirnmfsiz7b4r2B8sWtamk4soM13XZUMUnpbM_l6-Sba62mKvaYKGpHa7wSNu6uv1fpoRpmCvTJso2mScBIEkRQqFuhDT2TJ8h2PJdwjyRxRVifVqCH_2egynPctPdqmf4oRMGI4WripijYv60ohS44GcEpah4HuoqsduqkJnbxhl_d5_7aSzCOt01DeDT6mu3a5deK23O8EwdbIEzZcAWClFNC6xs5ab6SAThgg2KnnYo0DVt0jkKTv2IxRk0aQJobrpZ01VBHP37OMN_ps3Iwill8o9SycEPVT5fHFZ5WiTcdX7qa8wLBOTm35ZLTX3Xbm-CUH9Fn6hvW_al67m213Ncr2tZXrdJl9R3vEvParXbbsdyLcuxeusmfd6kbV06Xa_T7Tl2q9vruS13_QqQ515Y)
+[![](https://mermaid.ink/img/pako:eNqtld1u2jAUx1_F8sQdVHyUEHLHgGpoY6BCezEhVSY-AW-JHZ04WinlofoMe7E5hI9AAmql3sSxz-8c_20fH6-pqzhQh1YqlRnOpKukJxZO8kuIXkIADpmzCJKBHVIqrVOzkEI7ZNchZEa3_Iw65nfrQ8tntkeGgs19iBLo4JiYQxQBw1VX-QrTCF-8hnfrWZkgGe6rQg6YpdsuazDvjPaFhCxkzVt1u3oGaXjWWajm1duNVg5CLc4EQhNaMD8DPSX1HQuEv0qpiMmoEgEKo23PbdKfbbMplZIGsCfYAlmwZ36OeqMJeX2tVNSaPEweOvcD008iagESSCAgmKOKjlEP0M5p3O8NejsfBOaLF3aET8JnSSMiDi-B3dFwfN-ZPHVHP_rd6eCxk_q4AhAzPgVYEuD1dCaTapHyBc847s07ejDtDydP6eDeZbv6jMf9qPfQnR4l5nwQPECQrmBcEZCpa27PMslIyGj-G1w94ORJcDL-njVFGoVcEKnM5kOBAQIm_ILxkEXRX5O031i0LJxKKq5Mc1c0Gyr_LHX25_JZsk0REAtVGIzH8O8tL03GwRyQ-CIQGob7ZMwAnGkgHrhL1n8OBTJXKJm1M5Myq0Maj0Fyc7IaotxKj0f8aas10hbKlKKCBYUIRulQSGOP9BWCrS4S5ovMzxGb8zR_73oOpjiKTQXNH8a7sgiMFK5yYk4uzIcVhcAFvyIoRMVjV1_MH5eZG80Zv7jPndAXbpHugiLzYfWF27WbXittzvBKHqTAlTRgS4WopglWfDG6Sd08JOiGlukCBaeOx_wIyjQANNXE9Ok6IU7eV87wjyllMnEKmfylVEAdjbFxQxUvlocgcZjMt3tcDqOmIG7fz1hq6tQtexuEOmv6bLq2ddNsV-u1plW1LKtZpivqVGrt2k3DareqZrjetu22vSnTl-20tZt6o9qqWrd2q9Gq3zZq9uY_Ej-O6g?type=png)](https://mermaid.live/edit#pako:eNqtlVFv2jAQx7-K5Yk3qCApBPLGgGloY6BC-zAhVSa-gLfEji6OVkr5UPsM-2JzCNBAAmqlvsSx73fnv-3zeUM9xYG6tFarzXEuPSV9sXTTX0L0CkJwyYLFkA7skUplk5mFFNol-w4hc7rj59Q1vzsfWj2zPTAUbBFAnEJHx9QcoQgZrnsqUJhF-OTb_q3fygXJcZ8VcsA83fGYzfwzOhAS8lBr4Vjt-hmk4UnnoYZvdWynAKEWZwKhCQ4szkBfSf2FhSJYZ1TMZFyLAYXRduC22c-u2VYqaQPYF2yJLDwwP8b98ZS8vNRqakPup_fdu6HppxG1AAkkFBAuUMWvUY_Q3mky6A_7ex8EFohn9gqfhM-TRkQSXQJ749Hkrjt97I2_D3qz4UM38_EEIOZ8SrA0wMvpTCbVYhUInnM8mPf0cDYYTR-zwYPLbvU5j7tx_743e5VY8EHwAUF6gnFFQGauhT3LJSMh48Uv8PSQk0fByeRb3hRrFHJJpDKbDyUGCJkISsYjFsd_TNJ-ZfGqdCqpuDLNl7LZUAVnqXM4l4-SbYqAWKrSYDyBf3-L0mQSLgBJIEKhYXRIxhzAmQbig7dig6dIIPOEknk7MymzPqbxBCQ3J6shLqz09Yg_bLVG2lKZUlSyoAjBKB0JaeyxvkKw9UXCfJEFBWJ7nuZvXc_RlMSJqaDFw3hTFoGRwlVBzMmFebeiCLjgVwRFqHji6Yv54zFzoznjF_e5GwXCK9NdUmTerb50u_bTa6XNGV7Jgwy4kgZspRDVLMXKL0YvrZvHBN3SKl2i4NT1WRBDlYaAppqYPt2kxMn7yhn-NqVMpk4Rkz-VCqmrMTFuqJLl6hgkidL59o_LcdQUxN37mUhNXatp7YJQd0OfTLfTuml26lbDcepO2zTNKl1Tt2ZZzo3d6jh2x2m1rXarva3S5928jRvLrjv11m3bsR3r1m60t_8Bnx2PHw)
 
-## ¿Cómo se relacionan los datos en tu sistema de compras grupales?
+## ¿Qué nos dice este Diagrama de Entidad-Relación (DER)?
 
-### 1) El Eje Central: Nodos y Usuarios
-El sistema gira en torno a los Nodos (grupos de compra).
+Este diagrama es el **mapa de nuestra base de datos**. Nos muestra las colecciones principales que vamos a tener en MongoDB y cómo se vinculan entre sí utilizando referencias (los `ObjectId`). 
 
-- NODOS: Son creados por un usuario (creadorId) y agrupan a varias personas.
+Para entenderlo rápido, lo podemos dividir en 3 grandes bloques lógicos:
 
-- USUARIOS: Cada persona pertenece a un nodo específico (nodoId).
+### 1. La Comunidad (Nodos y Usuarios)
+* El **Nodo** es el agrupador principal. Contiene toda la información de gestión: quién lo administra (`dueñoId`), cuántas personas pueden entrar (`limiteMiembros`), cuándo termina la ronda de compras (`fechaExpiracion`) y quiénes están esperando entrar (`miembrosPendientes`).
+* Los **Usuarios** están vinculados obligatoriamente a un Nodo mediante su `nodoId`, formando la comunidad de compra.
 
-### 2) El Catálogo: Productos
-- PRODUCTOS: Almacenan la lógica clave del negocio. Tienen un precio común (precioMinorista), un precio con descuento (precioMayorista) y la cantidad mínima que se debe alcanzar para que aplique el descuento (umbralMayorista).
+### 2. El Catálogo y el Carrito (Productos, Pedidos e Items)
+* Los **Productos** representan nuestro catálogo maestro. Guardan las reglas del juego: los precios y el número mágico para alcanzar el descuento (`umbralMayorista`).
+* El **Pedido** es la "bolsa de compras" de un usuario específico. Sabe a quién pertenece (`usuarioId`), en qué nodo se está haciendo (`nodoId`) y en qué `estado` se encuentra (Abierto, Listo, Consolidado).
+* Los **Items_Pedido** son el detalle adentro de la bolsa. Conectan el pedido con el catálogo de productos y guardan la `cantidad` elegida y el `precioAplicado` (que se calculará al final).
 
-### 3) El Flujo de Compras
-- PEDIDOS: Cada usuario realiza pedidos dentro de su nodo.
-
-- ITEMS_PEDIDO: Es el "carrito de compras". Conecta un pedido específico con los productos, guardando cuántos se pidieron y qué precio se les terminó aplicando.
-
-- COMPRAS_COLECTIVAS: Es la consolidación final. El Nodo agrupa todos los pedidos individuales, calcula cuánto habría costado individualmente (totalMinorista), cuánto costó en grupo (totalMayorista) y el ahorroTotal generado al superar los umbrales de los productos.
+### 3. El Cierre Financiero (Compra Colectiva)
+* La **Compra Colectiva** es el ticket final del grupo. Se genera cuando el dueño del Nodo decide cerrar la semana. 
+* Agrupa múltiples **Pedidos** confirmados y guarda una "foto inmutable" de la transacción: cuánto se habría gastado en el súper normal (`totalMinorista`), cuánto se gastó realmente (`totalMayorista`) y el `ahorroTotal` generado gracias al volumen del grupo.
